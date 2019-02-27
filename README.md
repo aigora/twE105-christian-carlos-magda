@@ -10,4 +10,5 @@ Carlos Alejandro Fernández Zolle: Cfzolle.
 
 ## Objetivos el trabajo
 
-Lista de los objetivos que se persiguen con el trabajo propuesto.
+-Permitir al usuario registrarse para comprar productos.
+-Mostrar en la pantalla el catalogo de productos, indicando si se encuentran en stock, se han agotado o quedan unidades limitadas.
