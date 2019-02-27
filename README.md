@@ -1,11 +1,13 @@
-# Título del trabajo
+# e-shop
 
-Descripción breve del proyecto a realizar (2-3 frases).
+Simulador de tienda on-line.
 
 ## Integrantes del equipo
 
-Nombres, apellidos, y usuario GitHub de los integrantes del equipo.
+Christian Clemente de Frutos: christianclementedefrutos.
+Magdalena Huertas Hancco: MAGDALENAUPM.
+Carlos Alejandro Fernández Zolle: Cfzolle. 
 
-## Objetivos del trabajo
+## Objetivos el trabajo
 
 Lista de los objetivos que se persiguen con el trabajo propuesto.
