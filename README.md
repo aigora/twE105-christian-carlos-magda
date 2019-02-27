@@ -6,7 +6,7 @@ Simulador de tienda on-line.
 
 - Christian Clemente de Frutos: @christianclementedefrutos.
 - Magdalena Huertas Hancco: @MAGDALENAUPM.
-- Carlos Alejandro Fernández @Zolle: Cfzolle. 
+- Carlos Alejandro Fernández Zolle: @Cfzolle. 
 
 ## Objetivos el trabajo
 
