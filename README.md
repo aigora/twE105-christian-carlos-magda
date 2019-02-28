@@ -1,6 +1,6 @@
-# e-shop
+﻿# e-shop
 
-Simulador de tienda on-line.
+Simulador de tienda on-line especializada en componentes electrónicos.
 
 ## Integrantes del equipo
 
@@ -10,5 +10,6 @@ Simulador de tienda on-line.
 
 ## Objetivos el trabajo
 
-- Permitir al usuario registrarse para comprar productos.
+- Permitir al usuario registrarse con nombres, apellidos, un nickname y una password para comprar productos.
 - Mostrar en la pantalla el catalogo de productos, indicando si se encuentran en stock, se han agotado o quedan unidades limitadas.
+- Permitir a los usuarios que han comprado un producto, dejar comentarios sobre sus impresiones.
