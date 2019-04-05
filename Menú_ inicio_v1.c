@@ -5,6 +5,7 @@
 
 void main()
 {
+	system ("color F0");
 	char option;
 	do
 	{
