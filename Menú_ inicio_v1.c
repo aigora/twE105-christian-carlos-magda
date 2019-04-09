@@ -28,32 +28,32 @@ void main()
     			printf("\n\tCAT%cLOGO\n",181);
     			system("pause");
     			break;
-		}
+		    }
     	case 'i':
     		{
     			system("cls");
     			printf("\n\tINICIO DE SESI%cN\n",224);
     			system("pause");
     			break;
-		}
-	case 'r':
-		{
-			system("cls");
-			printf("\n\tCREA UNA CUENTA\n");
-			system("pause");
-			break;
-		}
-	case 's':
-		{
-			system("cls");
-			break;
-		}
-	default:
-		{
-			printf("\n\tEl caracter introducido no es v%clido\n",160);
-			system("pause");
-			break;
-		} 	
+			}
+		case 'r':
+			{
+				system("cls");
+				printf("\n\tCREA UNA CUENTA\n");
+				system("pause");
+				break;
+			}
+		case 's':
+			{
+				system("cls");
+				break;
+			}
+		default:
+			{
+				printf("\n\tEl caracter introducido no es v%clido\n",160);
+				system("pause");
+				break;
+			} 	
     }
 	}
 	while(option!='s');
