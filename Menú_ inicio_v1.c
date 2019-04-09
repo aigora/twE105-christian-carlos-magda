@@ -5,7 +5,7 @@
 
 void main()
 {
-	system ("color F0");
+	system ("color F0");//cambia el color del fondo(F) y del texto(0).
 	char option;
 	do
 	{
