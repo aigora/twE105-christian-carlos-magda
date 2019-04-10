@@ -1,4 +1,4 @@
-//MENÃš DE INICIO de e-shop
+//MENÚ DE INICIO de e-shop
 
 #include <stdio.h>
 #include <stdlib.h> /* system */
@@ -16,7 +16,7 @@ void main()
     		printf("\n BIENVENIDO\n\n");
  		printf("Seleccione una opci%cn para comenzar: \n\n \tAcceder al cat%clogo de productos (c)\n \tInicio de sesi%cn (i)\n \tRegistrarse (r)\n \tSalir (s)\n",162,160,162);
     
-		//Recoge la opciÃ³n del usuario introducida por teclado
+		//Recoge la opción del usuario introducida por teclado
     		scanf("%c",&option);
     
     		//Opciones elegibles por el usuario
@@ -57,4 +57,4 @@ void main()
     		}
 	}	
 	while(option!='s');
-}
+}}
