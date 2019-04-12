@@ -28,18 +28,19 @@ void main()
     					system("cls");
     					printf("\n\tCAT%cLOGO\n",181);
     					printf("Opciones del cat%clogo:\n -Mostrar cat%clogo completo(c)\n -Filtrar por precio(p)\n -Solo ofertas(o)\n -Mostrar categor%cas(k)\n", 160,160,161);
-    					/* ERROR
-						scanf("%c",&option2);
+    			       
+						scanf(" %c",&option2);
 						switch(option2)
 						{
 							case 'c':
 							{
+								system("cls");
 								printf("\n\tCAT%cLOGO\n",181);
 								system("pause");
 								break;	
 							}	
 						}
-						*/ 				
+						 				
       					break;
 				}
     			case 'i':
