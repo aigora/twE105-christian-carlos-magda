@@ -6,8 +6,10 @@
 void main()
 {
 	system ("color F0");//cambia el color del fondo(F) y del texto(0).
-	//option1 es el caracter para seleccionar las opciones del menú de inicio y option2 es el caracter para seleccionar las opciones del catálogo
-	char option1, option2;
+	//Caracter de opciones del menú 
+	char option_menu;
+	//Caracter de opciones del catálogo
+	char option_cat;
 	do
 	{
 		system("cls");//limpia la pantalla
@@ -18,33 +20,73 @@ void main()
  		printf("Seleccione una opci%cn para comenzar: \n\n \tAcceder al cat%clogo de productos (c)\n \tInicio de sesi%cn (i)\n \tRegistrarse (r)\n \tSalir (s)\n",162,160,162);
     
 		//Recoge la opción del usuario introducida por teclado
-    		scanf("%c",&option1);
+    		scanf("%c",&option_menu);
     
     		//Opciones elegibles por el usuario
-    		switch(option1)
+    		switch(option_menu)
     		{
     			case 'c':
     				{
     					system("cls");
     					printf("\n\tCAT%cLOGO\n",181);
+    					
+    					//OPCIONES DEL CATÁLOGO
+    					
     					printf("Opciones del cat%clogo:\n -Mostrar cat%clogo completo(c)\n -Filtrar por precio(p)\n -Solo ofertas(o)\n -Mostrar categor%cas(k)\n", 160,160,161);
     			       
-						scanf(" %c",&option2);
-						switch(option2)
+						scanf(" %c",&option_cat);
+						switch(option_cat)
 						{
 							case 'c':
 							{
+								//CATÁLOGO COMPLETO
 								system("cls");
 								printf("\n\tCAT%cLOGO\n",181);
 								system("pause");
 								break;	
-							}	
+							}
+							case 'p':
+							{
+								//FILTRADO DE PRODUCTOS POR PRECIO (MAYOR-MENOR/MENOR-MAYOR)
+								system("cls");
+								printf("\n\tPRODUCTOS ORDENADOS POR PRECIO\n");
+								printf("\n¿Desea que los productos se ordenen de mayor a menor precio (M) o de menor a mayor precio (m)?");
+								
+								system("pause");
+								break;
+							}
+							case 'o':
+							{
+								//OFERTAS
+								system("cls");
+								printf("\n\tOFERTAS\n");
+								system("pause");
+								break;
+							}
+							case 'k':
+							{
+								//CATEGORÍAS
+								system("cls");
+								printf("\n\tCATEGOR%cAS\n",214);
+								system("pause");
+								break;
+							}
+							default:
+							{
+								//CARÁCTER NO VÁLIDO
+								system("cls");
+								printf("Carácter introducido no válido.");
+								system("pause");
+								break;
+									
+							} 	
 						}
 						 				
       					break;
 				}
     			case 'i':
     				{
+    					//INICIO DE SESIÓN
     					system("cls");
     					printf("\n\tINICIO DE SESI%cN\n",224);
     					system("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
@@ -52,6 +94,7 @@ void main()
 	        		}
 			case 'r':
 				{
+					//REGISTRO DE NUEVO USUARIO
 					system("cls");
 					printf("\n\tCREA UNA CUENTA\n");
 					system("pause");
@@ -59,16 +102,19 @@ void main()
 				}
 			case 's':
 				{
+					//SALIR
 					system("cls");
 					break;
 				}
 			default:
 				{
+					//CARÁCTER NO VÁLIDO
 					printf("\n\tEl caracter introducido no es v%clido\n",160);
 					system("pause");
 					break;
 				} 	
     		}
 	}	
-	while(option1!='s');
+	while(option_menu!='s');
+	printf("\n\t%cHASTA LA PR%cXIMA!",173,224);
 }
