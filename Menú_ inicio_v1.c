@@ -5,6 +5,15 @@
 
 void main()
 {
+	//Pantalla de inicio
+	system("color E0");//cambia el color del fondo(E) y del texto(0).
+	//LOGO
+	printf("\n\t         ______\n\t       (  __   )\n\t      (  (__)   )\n\t     (   ______)\n\t      ( (______\n\t       (_______)\n");
+	printf("\n\n\n\n\t\t");
+	system ("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
+	system("cls");//Limpia la pantalla.
+	
+	//Menú principal
 	system ("color F0");//cambia el color del fondo(F) y del texto(0).
 	//Caracter de opciones del menú 
 	char option_menu;
@@ -28,7 +37,7 @@ void main()
     			case 'c':
     				{
     					system("cls");
-    					printf("\n\tCAT%cLOGO\n",181);
+    					printf("\n\tCAT%cLOGO\n\n",181);
     					
     					//OPCIONES DEL CATÁLOGO
     					
@@ -68,7 +77,7 @@ void main()
 								//CATEGORÍAS
 								system("cls");
 								printf("\n\tCATEGOR%cAS\n",214);
-								printf("\n Elige la categor%ca: ",161);
+								printf("\n Elige la categor%ca\n: ",161);
 								system("pause");
 								break;
 							}
@@ -117,5 +126,6 @@ void main()
     		}
 	}	
 	while(option_menu!='s');
+	system ("color E0");//cambia el color del fondo(F) y del texto(0).
 	printf("\n\t%cHASTA LA PR%cXIMA!",173,224);
 }
