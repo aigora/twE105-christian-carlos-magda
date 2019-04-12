@@ -50,7 +50,7 @@ void main()
 								//FILTRADO DE PRODUCTOS POR PRECIO (MAYOR-MENOR/MENOR-MAYOR)
 								system("cls");
 								printf("\n\tPRODUCTOS ORDENADOS POR PRECIO\n");
-								printf("\n¿Desea que los productos se ordenen de mayor a menor precio (M) o de menor a mayor precio (m)?");
+								printf("\n%cDesea que los productos se ordenen de mayor a menor precio (M) o de menor a mayor precio (m)?\n",168);
 								
 								system("pause");
 								break;
@@ -68,14 +68,15 @@ void main()
 								//CATEGORÍAS
 								system("cls");
 								printf("\n\tCATEGOR%cAS\n",214);
+								printf("\n Elige la categor%ca: ",161);
 								system("pause");
 								break;
 							}
 							default:
 							{
-								//CARÁCTER NO VÁLIDO
+								//CARACTER NO VÁLIDO
 								system("cls");
-								printf("Carácter introducido no válido.");
+								printf("Caracter introducido no válido.");
 								system("pause");
 								break;
 									
@@ -108,7 +109,7 @@ void main()
 				}
 			default:
 				{
-					//CARÁCTER NO VÁLIDO
+					//CARACTER NO VÁLIDO
 					printf("\n\tEl caracter introducido no es v%clido\n",160);
 					system("pause");
 					break;
