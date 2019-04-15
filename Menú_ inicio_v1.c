@@ -8,7 +8,12 @@ void main()
 	//Pantalla de inicio
 	system("color E0");//cambia el color del fondo(E) y del texto(0).
 	//LOGO
-	printf("\n\t         ______\n\t       (  __   )\n\t      (  (__)   )\n\t     (   ______)\n\t      ( (______\n\t       (_______)\n");
+	printf("\n\t         ______                 _______    __    __    _______    _____");
+	printf("\n\t       (  __   )               (  _____)  (  )  (  )  (  ___  )  (  __ )");
+	printf("\n\t      (  (__)   )    _____     (  )____   (  )__(  )  ( (   ) )  ( (__) )");
+	printf("\n\t     (   ______)    (_____)    (_____  )  (   __   )  ( (   ) )  (  ___) ");
+	printf("\n\t      ( (______                 ____(  )  (  )  (  )  ( (___) )  ( )");
+	printf("\n\t       (_______)               (_______)  (__)  (__)  (_______)  (_)");
 	printf("\n\n\n\n\t\t");
 	system ("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
 	system("cls");//Limpia la pantalla.
