@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h> /* system */
 
+
 void main()
 {
 	//Pantalla de inicio
@@ -99,22 +100,21 @@ void main()
 						 				
       					break;
 				}
-    			case 'i':
-    				{
-    					//INICIO DE SESIÓN
-    					system("cls");
-    					printf("\n\tINICIO DE SESI%cN\n",224);
-    					system("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
-    					break;
-	        		}
 			case 'r':
 				{
 					//REGISTRO DE NUEVO USUARIO
 					system("cls");
 					printf("\n\tCREA UNA CUENTA\n");
 					system("pause");
-					break;
-				}
+				}	
+    		case 'i':
+    			{
+    				//INICIO DE SESIÓN
+    				system("cls");
+    				printf("\n\tINICIO DE SESI%cN\n",224);
+    				system("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
+    				break;
+	        	}
 			case 's':
 				{
 					//SALIR
