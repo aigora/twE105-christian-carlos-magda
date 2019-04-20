@@ -1,0 +1,72 @@
+-Condensadores
+
+	a)Condensador cerámico 
+		Especificaciones:
+			Capacidad: 1,5  nF
+                        Voltaje:   100  V
+                        Precio:    0,06 €
+                Stock (200 unidades)
+                Añadir al carrito. Seleccionar cantidad.
+
+	b)Condensador de poliester
+		Especificaciones:
+			Capacidad: 39  nF
+                        Voltaje:   400  V
+                        Precio:    0,25 €
+                Stock (Agotado)
+                Añadir al carrito. Seleccionar cantidad.    
+-Baterías
+
+	 a)Pila de litio   
+		Especificaciones:
+			Capacidad: 1200  mAh
+                        Tensión:   3,6  V
+			dimensiones: Ø14,5 x 25,2mm
+                        Precio:    5,00 €
+                Stock (15 unidades)
+                Añadir al carrito. Seleccionar cantidad.
+
+	 b)Pila de botón alcalina   
+		Especificaciones:
+			Capacidad: 21  mAh
+                        Tensión nom.:   1,5  V
+			dimensiones: Ø7.9 x 2.1mm
+                        Precio:    0,05 €
+                Stock (136 unidades)
+                Añadir al carrito. Seleccionar cantidad.
+-Conmutadores
+
+	 a)Conmutador deslizante de dos posiciones   
+		Especificaciones:
+		        descripción: terminales soldables y aletas de sujeción.
+			dimensiones: 5,5 x 19,5mm
+                        Precio:    0,30 €
+                Stock (147 unidades)
+                Añadir al carrito. Seleccionar cantidad.
+
+	 b)Conmutador rotativo iluminado   
+		Especificaciones:
+			descripción: iluminado con LED rojo de 220V 
+			dimensiones: 5,5x 5 x 8mm
+                        Precio:    4,40 €
+                Stock (24 unidades)
+                Añadir al carrito. Seleccionar cantidad.
+-Resistencias
+	 a)Resistencias de película de carbón (25 unidades)   
+		Especificaciones:
+		        Potencia: 1/16W
+			resistencia: 100K ohmios 
+                        tolerancia: 1%
+                        Precio:    0,50 €
+                Stock (290 unidades)
+                Añadir al carrito. Seleccionar cantidad.
+
+	 a)Resistencia bobinada axial   
+		Especificaciones:
+		        potencia: 10W
+			resistencia: 100 ohmios
+			tolerancia: 10%
+                        Precio:    1,45 €
+                Stock (Agotado)
+                Añadir al carrito. Seleccionar cantidad.	
+
