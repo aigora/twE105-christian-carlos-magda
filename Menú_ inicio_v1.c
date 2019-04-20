@@ -1,4 +1,4 @@
-//MEN⁄ DE INICIO de e-shop
+//MEN√ö DE INICIO de e-shop
 
 #include <stdio.h>
 #include <stdlib.h> /* system */
@@ -19,11 +19,11 @@ void main()
 	system ("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
 	system("cls");//Limpia la pantalla.
 	
-	//Men˙ principal
+	//Men√∫ principal
 	system ("color F0");//cambia el color del fondo(F) y del texto(0).
-	//Caracter de opciones del men˙ 
+	//Caracter de opciones del men√∫ 
 	char option_menu;
-	//Caracter de opciones del cat·logo
+	//Caracter de opciones del cat√°logo
 	char option_cat;
 	do
 	{
@@ -34,7 +34,7 @@ void main()
     		printf("\n BIENVENIDO\n\n");
  		printf("Seleccione una opci%cn para comenzar: \n\n \tAcceder al cat%clogo de productos (c)\n \tInicio de sesi%cn (i)\n \tRegistrarse (r)\n \tSalir (s)\n",162,160,162);
     
-		//Recoge la opciÛn del usuario introducida por teclado
+		//Recoge la opci√≥n del usuario introducida por teclado
     		scanf("%c",&option_menu);
     
     		//Opciones elegibles por el usuario
@@ -45,7 +45,7 @@ void main()
     					system("cls");
     					printf("\n\tCAT%cLOGO\n\n",181);
     					
-    					//OPCIONES DEL CAT¡LOGO
+    					//OPCIONES DEL CAT√ÅLOGO
     					
     					printf("Opciones del cat%clogo:\n -Mostrar cat%clogo completo(c)\n -Filtrar por precio(p)\n -Solo ofertas(o)\n -Mostrar categor%cas(k)\n", 160,160,161);
     			       
@@ -54,7 +54,7 @@ void main()
 						{
 							case 'c':
 							{
-								//CAT¡LOGO COMPLETO
+								//CAT√ÅLOGO COMPLETO
 								system("cls");
 								printf("\n\tCAT%cLOGO\n",181);
 								system("pause");
@@ -80,7 +80,7 @@ void main()
 							}
 							case 'k':
 							{
-								//CATEGORÕAS
+								//CATEGOR√çAS
 								system("cls");
 								printf("\n\tCATEGOR%cAS\n",214);
 								printf("\n Elige la categor%ca\n: ",161);
@@ -89,9 +89,9 @@ void main()
 							}
 							default:
 							{
-								//CARACTER NO V¡LIDO
+								//CARACTER NO V√ÅLIDO
 								system("cls");
-								printf("Caracter introducido no v·lido.");
+								printf("Caracter introducido no v√°lido.");
 								system("pause");
 								break;
 									
@@ -107,14 +107,14 @@ void main()
 					printf("\n\tCREA UNA CUENTA\n");
 					system("pause");
 				}	
-    		case 'i':
-    			{
-    				//INICIO DE SESI”N
-    				system("cls");
-    				printf("\n\tINICIO DE SESI%cN\n",224);
-    				system("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
-    				break;
-	        	}
+    			case 'i':
+    				{
+    					//INICIO DE SESI√ìN
+    					system("cls");
+    					printf("\n\tINICIO DE SESI%cN\n",224);
+    					system("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
+    					break;
+	        		}
 			case 's':
 				{
 					//SALIR
@@ -123,7 +123,7 @@ void main()
 				}
 			default:
 				{
-					//CARACTER NO V¡LIDO
+					//CARACTER NO V√ÅLIDO
 					printf("\n\tEl caracter introducido no es v%clido\n",160);
 					system("pause");
 					break;
