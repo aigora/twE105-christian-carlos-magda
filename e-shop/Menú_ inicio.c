@@ -123,9 +123,10 @@ void main()
 					//REGISTRO DE NUEVO USUARIO
 					system("cls");
 					printf("\n\tCREA UNA CUENTA\n");
+					
+					//Función para el registro de nuevos usuarios
 					registro();
-					
-					
+					printf("\n");
 					system("pause");
 				}	
     			case 'i':
@@ -158,9 +159,62 @@ void main()
 
 //función de registro (PRUEBA)
 void registro(){
-	usuario persona1;
-	printf("Nombre: ");
+	
+	//Ejemplo de variable persona(estructura usuario) que se registra
+	usuario persona1;	
+	
+	FILE *pf;
+	//Abrimos un fichero en el que se almacenaran los datos de los usuarios
+	pf=fopen("registro_usuarios.txt","a");
+	//Comprobamos si hay error al abrir el fichero
+	if(pf==NULL) printf("Error al abrir el fichero.");
+
+	//Usuario introduce sus datos
+	
+	//Nombre
+	printf("\n\tNombre: ");
 	scanf(" %[^\n][60]",persona1.nombre);
-	printf("Apellidos: ");
+	
+	//Apellidos
+	printf("\n\tApellidos: ");
 	scanf(" %[^\n][60]",persona1.apellidos);
+	
+	//Nickname
+	printf("\n\tNickname: ");
+	scanf(" %[^\n][16]",persona1.nickname);
+	
+	//Password
+	printf("\n\tPassword: ");
+	scanf(" %[^\n][16]",persona1.password);
+	
+	//Fecha de cumpleaños
+	printf("\n\tEscriba la su fecha con el formato: (2/3/1987) separando los n%cmeros con espacios\n",163);
+	printf("\n\tFecha de nacimiento : ");
+	scanf(" %i %i %i",
+			&persona1.nacimiento.day,&persona1.nacimiento.month,&persona1.nacimiento.year);
+	
+	//Comprobación de mayoría de edad
+	if (persona1.nacimiento.year>2000) {	
+	printf("\n\nLo sentimos, los menores de 18 a%cos no pueden poseer una cuenta.\n",164);
+	}
+	
+	fprintf(pf,"USER:%s %s\t NICK:%s\t PASSWORD:%s\n"
+			,persona1.nombre,persona1.apellidos,persona1.nickname,persona1.password);
+			
+	printf("\n\nRegistro completado satisfactoriamente!\n");		
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

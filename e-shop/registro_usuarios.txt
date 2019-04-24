@@ -1,0 +1,3 @@
+
+USER:Christian  Clemente de Frutos	 NICK:Chris	 PASSWORD:12345
+USER:Carlos Fernandez Zolle	 NICK:Carl	 PASSWORD:54321
