@@ -3,9 +3,27 @@
 #include <stdio.h>
 #include <stdlib.h> /* system */
 
+//Estructura de fechas (para fechas de nacimiento de los usuarios).
+typedef struct{
+	int day,month,year;
+}fecha;
+
+//Estructura de usuario.
+typedef struct{
+	char nombre[60];
+	char apellidos[60];
+    fecha nacimiento;
+    char nickname[16];
+    char password[16];
+}usuario; 
+
+//función de registro.
+void registro();
 
 void main()
 {
+	
+	
 	//Pantalla de inicio
 	system("color E0");//cambia el color del fondo(E) y del texto(0).
 	//LOGO
@@ -35,7 +53,7 @@ void main()
  		printf("Seleccione una opci%cn para comenzar: \n\n \tAcceder al cat%clogo de productos (c)\n \tInicio de sesi%cn (i)\n \tRegistrarse (r)\n \tSalir (s)\n",162,160,162);
     
 		//Recoge la opciÃ³n del usuario introducida por teclado
-    		scanf("%c",&option_menu);
+    		scanf(" %c",&option_menu);
     
     		//Opciones elegibles por el usuario
     		switch(option_menu)
@@ -105,6 +123,9 @@ void main()
 					//REGISTRO DE NUEVO USUARIO
 					system("cls");
 					printf("\n\tCREA UNA CUENTA\n");
+					registro();
+					
+					
 					system("pause");
 				}	
     			case 'i':
@@ -133,4 +154,13 @@ void main()
 	while(option_menu!='s');
 	system ("color E0");//cambia el color del fondo(F) y del texto(0).
 	printf("\n\t%cHASTA LA PR%cXIMA!",173,224);
+}
+
+//función de registro (PRUEBA)
+void registro(){
+	usuario persona1;
+	printf("Nombre: ");
+	scanf(" %[^\n][60]",persona1.nombre);
+	printf("Apellidos: ");
+	scanf(" %[^\n][60]",persona1.apellidos);
 }
