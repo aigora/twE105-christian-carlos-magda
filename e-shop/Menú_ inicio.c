@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> /* system */
+#include <string.h> /*strcmp*/
 
 //Estructura de fechas (para fechas de nacimiento de los usuarios).
 typedef struct{
@@ -12,7 +13,6 @@ typedef struct{
 typedef struct{
 	char nombre[60];
 	char apellidos[60];
-    fecha nacimiento;
     char nickname[16];
     char password[16];
 }usuario; 
@@ -157,20 +157,33 @@ void main()
 	printf("\n\t%cHASTA LA PR%cXIMA!",173,224);
 }
 
-//función de registro (PRUEBA)
+//función de registro 
 void registro(){
+	//auxiliar para comprobar si los datos son correctos.
+	int flag;
+	//iteracion 
+	int n;
+	//Vector que almacena las estructuras de los usuarios registrados
+	usuario registrados[100];
 	
-	//Ejemplo de variable persona(estructura usuario) que se registra
-	usuario persona1;	
+	//variable persona(estructura usuario) que se registra
+	usuario persona1;
+	//fecha de nacimiento del usuario.
+	fecha nacimiento;	
 	
 	FILE *pf;
-	//Abrimos un fichero en el que se almacenaran los datos de los usuarios
-	pf=fopen("registro_usuarios.txt","a");
+	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
+	pf=fopen("registro_usuarios.txt","r");
 	//Comprobamos si hay error al abrir el fichero
 	if(pf==NULL) printf("Error al abrir el fichero.");
 
 	//Usuario introduce sus datos
-	
+	//Bucle que se repite hasta que el usuario introduzca datos válidos.
+	do
+	{
+	//Inicializamos n en 0 y flag en 1	
+	n=0;
+	flag=1;
 	//Nombre
 	printf("\n\tNombre: ");
 	scanf(" %[^\n][60]",persona1.nombre);
@@ -183,6 +196,17 @@ void registro(){
 	printf("\n\tNickname: ");
 	scanf(" %[^\n][16]",persona1.nickname);
 	
+	//comprueba si hay coincidencias en el nickname.
+	
+	while(fscanf(pf,"%[^;];%[^;];%[^;];%[^\n]\n",registrados[n].nombre,registrados[n].apellidos,registrados[n].nickname,registrados[n].password)!=EOF&&flag!=0)
+	{
+		//printf("%s\n", registrados[n].nickname);
+		flag=strcmp(registrados[n].nickname,persona1.nickname);
+		n++;
+	}
+	if (flag==0) printf("\n\tUsuario ya registrado\n");
+	else
+	{
 	//Password
 	printf("\n\tPassword: ");
 	scanf(" %[^\n][16]",persona1.password);
@@ -191,17 +215,31 @@ void registro(){
 	printf("\n\tEscriba la su fecha con el formato: (2/3/1987) separando los n%cmeros con espacios\n",163);
 	printf("\n\tFecha de nacimiento : ");
 	scanf(" %i %i %i",
-			&persona1.nacimiento.day,&persona1.nacimiento.month,&persona1.nacimiento.year);
+			&nacimiento.day,&nacimiento.month,&nacimiento.year);
 	
 	//Comprobación de mayoría de edad
-	if (persona1.nacimiento.year>2000) {	
+	if (nacimiento.year>2000) {	
 	printf("\n\nLo sentimos, los menores de 18 a%cos no pueden poseer una cuenta.\n",164);
-	}
 	
-	fprintf(pf,"USER:%s %s\t NICK:%s\t PASSWORD:%s\n"
+	fclose (pf);
+	}
+    }
+    }while(flag==0);
+    
+	if(flag !=0)
+	{
+	//Abrimos un fichero en modo escritura en el que se almacenaran los datos de los usuarios
+	pf=fopen("registro_usuarios.txt","a");
+	//Comprobamos si hay error al abrir el fichero
+	if(pf==NULL) printf("Error al abrir el fichero.");
+    
+	fprintf(pf,"%s;%s;%s;%s\n"
 			,persona1.nombre,persona1.apellidos,persona1.nickname,persona1.password);
 			
-	printf("\n\nRegistro completado satisfactoriamente!\n");		
+	printf("\n\nRegistro completado satisfactoriamente!\n");
+	
+	fclose (pf);
+	}
 }
 
 
