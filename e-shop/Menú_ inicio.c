@@ -20,6 +20,9 @@ typedef struct{
 //función de registro.
 void registro();
 
+//función del login.
+void login();
+
 void main()
 {
 	
@@ -157,7 +160,8 @@ void main()
 	printf("\n\t%cHASTA LA PR%cXIMA!",173,224);
 }
 
-//función de registro 
+//función de registro
+ 
 void registro(){
 	//auxiliar para comprobar si los datos son correctos.
 	int flag;
@@ -242,7 +246,7 @@ void registro(){
 	}
 }
 
-
+//función login 
 
 
 

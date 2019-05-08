@@ -2,3 +2,4 @@ Christian;Clemente de Frutos;chris;12345
 res;des;chris;12345
 mgda;c;mad;1234
 cl;sl;xd;12
+h;c;class;12
