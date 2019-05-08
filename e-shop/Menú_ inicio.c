@@ -25,6 +25,7 @@ void login();
 
 void main()
 {
+	char nick_usuario[16];
 	
 	
 	//Pantalla de inicio
@@ -137,7 +138,11 @@ void main()
     					//INICIO DE SESIÃ“N
     					system("cls");
     					printf("\n\tINICIO DE SESI%cN\n",224);
-    					system("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
+    					//Función para el inicio de sesión
+    					//Devuelve el nick del usuario iniciado una vez la sesión se inicia correctamente
+    					login();
+    					printf("\n");
+    					system("pause");
     					break;
 	        		}
 			case 's':
@@ -198,7 +203,7 @@ void registro(){
 	
 	//Nickname
 	printf("\n\tNickname: ");
-	scanf(" %[^\n][16]",persona1.nickname);
+	scanf(" %s[16]",persona1.nickname);
 	
 	//comprueba si hay coincidencias en el nickname.
 	
@@ -213,7 +218,7 @@ void registro(){
 	{
 	//Password
 	printf("\n\tPassword: ");
-	scanf(" %[^\n][16]",persona1.password);
+	scanf(" %s[16]",persona1.password);
 	
 	//Fecha de cumpleaños
 	printf("\n\tEscriba la su fecha con el formato: (2/3/1987) separando los n%cmeros con espacios\n",163);
@@ -246,7 +251,72 @@ void registro(){
 	}
 }
 
-//función login 
+//función login
+
+void login ()
+{
+	//auxiliar para comprobar si los datos son correctos.
+	int flag;
+	//iteracion 
+	int n;
+	//Vector que almacena las estructuras de los usuarios registrados
+	usuario registrados[100];
+	
+	//Cadenas de caracteres para el nick y la contraseña del usuario logueandose
+	char nick[16];
+	char pass[16];
+	
+	
+	FILE *pf;
+	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
+	pf=fopen("registro_usuarios.txt","r");
+	//Comprobamos si hay error al abrir el fichero
+	if(pf==NULL) printf("Error al abrir el fichero.");
+
+	//Usuario introduce sus datos
+	//Bucle que se repite hasta que el usuario introduzca datos válidos.
+	do
+	{
+		//Inicializamos n en 0 y flag en 1	
+		n=0;
+		flag=1;
+	
+	
+		//Nickname
+		printf("\n\tNickname: ");
+		scanf(" %s[16]",nick);
+	
+		//Password
+		printf("\n\tPassword: ");
+		scanf(" %s[16]",pass);
+	
+		//comprueba si el inicio de sesión es correcto.
+	
+		while(fscanf(pf,"%[^;];%[^;];%[^;];%[^\n]\n",registrados[n].nombre,registrados[n].apellidos,registrados[n].nickname,registrados[n].password)!=EOF&&flag!=0)
+		{
+			//Comprobamos usuario y contraseña
+			if(strcmp(registrados[n].nickname,nick)==0&&strcmp(registrados[n].password,pass)==0)
+			{
+				flag=0;
+			}
+			n++;
+		}
+		if (flag==0){
+			fclose (pf);
+			printf("\n\tLa sesi%cn ha sido iniciada satisfactoriamente.\n",162);
+			system("pause");
+			system("cls");
+			printf("\n\tBienvenido de nuevo, %s.\n",nick);
+		}
+		else
+		{
+		  printf("\n\t Nickname o contrase%ca incorrectos.\n",164);
+		  system("pause");
+		  system("cls");
+		}
+    }while(flag==1);
+    
+} 
 
 
 
