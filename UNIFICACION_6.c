@@ -53,6 +53,7 @@ void categorias(producto productos[], int dimension,clasificacion clasificacione
 void evalua(producto productos[],int dimension,clasificacion clasificaciones[],int dimension1,int j);//función que compara si la elección concide con el tipo y manda imprimir productos del mismo tipo
 void ofertas(producto productos[],int dimension);
 void comprando(void);
+void filtro_precio();//función qeu filtra en base a un intervalo de precio dado por el usuario
 //función de registro.
 //void registro();
 
@@ -149,9 +150,10 @@ fclose(pf2); // Cerramos fichero
 							{
 								//FILTRADO DE PRODUCTOS POR PRECIO (MAYOR-MENOR/MENOR-MAYOR)
 								system("cls");
-								printf("\n\tPRODUCTOS ORDENADOS POR PRECIO\n");
-								printf("\n%cDesea que los productos se ordenen de mayor a menor precio (M) o de menor a mayor precio (m)?\n",168);
-								
+								//printf("\n\tPRODUCTOS ORDENADOS POR PRECIO\n");
+								//printf("\n%cDesea que los productos se ordenen de mayor a menor precio (M) o de menor a mayor precio (m)?\n",168);
+								//Filtro por intervalo de precios
+								filtro_precio();
 								system("pause");
 								break;
 							}
@@ -464,5 +466,76 @@ switch (eleccion)
   }while(g==0);
 }
     
+void filtro_precio(){//Función que filtra el catálogo de manera que solo muestre los objetos que pertenezcan a un intervalo de precios a elegir por el usuario.
+	float a, b;//Límites de precios a filtrar
+	int n, h;//auxiliar para lectura de ficheros
+	int i, flag=0;//auxiliares
+	producto productos[N];
+	
+	printf("Precios\n");
+	
+	FILE *pf;
+	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
+	pf=fopen("lista_de_productos_1.txt","r");
+	//Comprobamos si hay error al abrir el fichero
+	if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+	
+	FILE *df;
+	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
+	df=fopen("lista_de_productos.txt","r");
+	//Comprobamos si hay error al abrir el fichero
+	if(df==NULL) printf("Error al abrir el fichero lista_de_productos.");
+	
+	do
+	{
+		
+		printf("Indique los dos extremos del intervalo de precio\n\n");
+		scanf(" %f %f", &a, &b);
+		
+		for(i=0;i<N;i++)
+		{
+			
+		n=fscanf(df,"%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^\n]\n",
+  			productos[i].tipo,
+  			productos[i].nombre,
+  			productos[i].Especificaciones[0].Descripcion,
+  			productos[i].Especificaciones[1].Descripcion,
+  			productos[i].Especificaciones[2].Descripcion,
+  			productos[i].Especificaciones[3].Descripcion,
+  			productos[i].estado,
+  			productos[i].codigo);//Leemos todos los productos
+  			
+		h=fscanf(pf,"%f;%i\n",
+  			&productos[i].precio,
+  			&productos[i].unidades);//leemos los precios, y el número de unidades
+  			
+		if(productos[i].precio<=b && productos[i].precio>=a) //Comprueba si los precios de cada objeto está dentro del intervalo elegido
+			{//si se cumple, se imprime el objeto, junto con todas sus especificaciones
+				
+			printf("%s\n\tEspecificaciones:\n\t\t%s\n\t\t%s\n\t\t%s\n\tCodigo: %s\n",
+	    		productos[i].nombre,
+	       		productos[i].Especificaciones[0].Descripcion,
+	       		productos[i].Especificaciones[1].Descripcion,
+	       		productos[i].Especificaciones[2].Descripcion,
+	       		productos[i].codigo);
+	       		
+			printf("\tPrecio: %f\n\tUnidades: %i\n\n",
+           		productos[i].precio,
+           		productos[i].unidades);
+           		
+       		 	flag=1;
+       		 	
+			}	
+			
+		}
+	
+	if(flag==0) printf("No hay ningún objeto en ese rango de precio, por favor intentelo de nuevo.\n\n");
+	//en caso de que ningun objeto cumpla el intervalo de precio determinado, se solicita un nuevo intervalo
+	
+	}
+	while(flag==0);
+	
+	comprando();//función compra
+}
 			
 
