@@ -48,12 +48,13 @@ typedef struct
 	char CODIGOCOMPRA[5];
 }CODE;
 
-void catalogo_completo(producto productos[],int dimension,clasificacion clasificaciones[],int dimension1);//prototipo de la funciÛn
-void categorias(producto productos[], int dimension,clasificacion clasificaciones[],int dimension1);
+void catalogo_completo();//prototipo de la funciÛn
+void categorias(/*producto productos[], int dimension,*/clasificacion clasificaciones[],int dimension1);
 void evalua(producto productos[],int dimension,clasificacion clasificaciones[],int dimension1,int j);//funciÛn que compara si la elecciÛn concide con el tipo y manda imprimir productos del mismo tipo
 void ofertas(producto productos[],int dimension);
 void comprando(void);
 void filtro_precio();//funciÛn qeu filtra en base a un intervalo de precio dado por el usuario
+void leer_catalogo(producto productos[],int dimension);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
 //funciÛn de registro.
 //void registro();
 
@@ -141,7 +142,7 @@ fclose(pf2); // Cerramos fichero
 							{
 								//CAT√ÅLOGO COMPLETO
 								system("cls");
-								catalogo_completo(productos,N,clasificaciones,M);
+								catalogo_completo();
 								system("pause");
 								//comprando();
 								break;	
@@ -170,7 +171,7 @@ fclose(pf2); // Cerramos fichero
 							{
 								//CATEGOR√çAS
 								system("cls");
-								categorias(productos,N,clasificaciones,M);//funciÛn que te muestra las categorÌas
+								categorias(/*productos,N,*/clasificaciones,M);//funciÛn que te muestra las categorÌas
 								system("pause");
 								break;
 							}
@@ -228,14 +229,20 @@ fclose(pf2); // Cerramos fichero
 
 
 
-void catalogo_completo(producto productos[], int dimension,clasificacion clasificaciones[],int dimension1)
+void catalogo_completo()
 {
 	int i,m,k,a,j;
+	producto productos[N];
+	
 	printf("\n\tCAT%cLOGO\n",181);
+	
 	//for (j=0;j<M;j++)
     //{
 	//printf("%s", clasificaciones[j].TIPO);
 	//for(i=0;i<clasificaciones[j].NTIPO;i++)
+	
+	leer_catalogo(productos,N);
+	
 	for(i=0;i<N;i++)
 	{
 	/*m=0;
@@ -268,10 +275,14 @@ void catalogo_completo(producto productos[], int dimension,clasificacion clasifi
    comprando();
 }
 
-void categorias(producto productos[], int dimension,clasificacion clasificaciones[],int dimension1)
+void categorias(/*producto productos[], int dimension,*/clasificacion clasificaciones[],int dimension1)
 {	
 int p=0,i;//p es una bandera que nos sirve para saber si el usuario a introducido un caracter v·lido o no y de esta forma saber si se lo tenemos que volver a pedir 
 char eleccion;//mejor serÌa cambiar eleccion una cadena de caracteres por si el usuario en vez introoducir una letra mal, introduce varias letra, numero y simbolo mal
+producto productos[N];
+
+leer_catalogo(productos,N);
+
 printf("\n\tCATEGOR%cAS\n",214);
 printf("\n Elige la categor%ca:\n",161);
 printf("\tCondensadores(C)\n\tPilas(P)\n\tConmutadores(S)\n\tResistencia(R)\n\tSalir(S)\n ");
@@ -468,23 +479,10 @@ switch (eleccion)
     
 void filtro_precio(){//FunciÛn que filtra el cat·logo de manera que solo muestre los objetos que pertenezcan a un intervalo de precios a elegir por el usuario.
 	float a, b;//LÌmites de precios a filtrar
-	int n, h;//auxiliar para lectura de ficheros
 	int i, flag=0;//auxiliares
 	producto productos[N];
 	
 	printf("Precios\n");
-	
-	FILE *pf;
-	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
-	pf=fopen("lista_de_productos_1.txt","r");
-	//Comprobamos si hay error al abrir el fichero
-	if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
-	
-	FILE *df;
-	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
-	df=fopen("lista_de_productos.txt","r");
-	//Comprobamos si hay error al abrir el fichero
-	if(df==NULL) printf("Error al abrir el fichero lista_de_productos.");
 	
 	do
 	{
@@ -492,23 +490,11 @@ void filtro_precio(){//FunciÛn que filtra el cat·logo de manera que solo muestre
 		printf("Indique los dos extremos del intervalo de precio\n\n");
 		scanf(" %f %f", &a, &b);
 		
+		leer_catalogo(productos,N);//Leemos el catalogo y guardamos los datos en un vectores de estructuras
+		
 		for(i=0;i<N;i++)
 		{
-			
-		n=fscanf(df,"%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^\n]\n",
-  			productos[i].tipo,
-  			productos[i].nombre,
-  			productos[i].Especificaciones[0].Descripcion,
-  			productos[i].Especificaciones[1].Descripcion,
-  			productos[i].Especificaciones[2].Descripcion,
-  			productos[i].Especificaciones[3].Descripcion,
-  			productos[i].estado,
-  			productos[i].codigo);//Leemos todos los productos
-  			
-		h=fscanf(pf,"%f;%i\n",
-  			&productos[i].precio,
-  			&productos[i].unidades);//leemos los precios, y el n˙mero de unidades
-  			
+		
 		if(productos[i].precio<=b && productos[i].precio>=a) //Comprueba si los precios de cada objeto est· dentro del intervalo elegido
 			{//si se cumple, se imprime el objeto, junto con todas sus especificaciones
 				
@@ -536,6 +522,43 @@ void filtro_precio(){//FunciÛn que filtra el cat·logo de manera que solo muestre
 	while(flag==0);
 	
 	comprando();//funciÛn compra
+}
+
+void leer_catalogo(producto productos[],int dimension){
+	
+	int i=0;
+	int n, h;//auxiliar para lectura de ficheros
+	
+	FILE *pf;
+	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
+	pf=fopen("lista_de_productos_1.txt","r");
+	//Comprobamos si hay error al abrir el fichero
+	if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+	
+	FILE *df;
+	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
+	df=fopen("lista_de_productos.txt","r");
+	//Comprobamos si hay error al abrir el fichero
+	if(df==NULL) printf("Error al abrir el fichero lista_de_productos.");
+	
+	for(i=0;i<N;i++)
+		{
+			
+		n=fscanf(df,"%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^\n]\n",
+  			productos[i].tipo,
+  			productos[i].nombre,
+  			productos[i].Especificaciones[0].Descripcion,
+  			productos[i].Especificaciones[1].Descripcion,
+  			productos[i].Especificaciones[2].Descripcion,
+  			productos[i].Especificaciones[3].Descripcion,
+  			productos[i].estado,
+  			productos[i].codigo);//Leemos todos los productos
+  			
+		h=fscanf(pf,"%f;%i\n",
+  			&productos[i].precio,
+  			&productos[i].unidades);//leemos los precios, y el n˙mero de unidades
+  			
+  		}
 }
 			
 
