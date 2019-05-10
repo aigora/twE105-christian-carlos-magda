@@ -49,12 +49,12 @@ typedef struct
 }CODE;
 
 void catalogo_completo();//prototipo de la función
-void categorias(/*producto productos[], int dimension,*/clasificacion clasificaciones[],int dimension1);
-void evalua(producto productos[],int dimension,clasificacion clasificaciones[],int dimension1,int j);//función que compara si la elección concide con el tipo y manda imprimir productos del mismo tipo
+void categorias();
+void evalua(int j);//función que compara si la elección concide con el tipo y manda imprimir productos del mismo tipo
 void ofertas(producto productos[],int dimension);
-void comprando(void);
-void filtro_precio();//función qeu filtra en base a un intervalo de precio dado por el usuario
-void leer_catalogo(producto productos[],int dimension);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
+void comprando();
+void filtro_precio();//función que filtra en base a un intervalo de precio dado por el usuario
+void leer_catalogo(producto productos[],int dimension,clasificacion clasificaciones[],int dimension1);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
 //función de registro.
 //void registro();
 
@@ -89,10 +89,10 @@ m1=fscanf(pf1,"%f;%i\n",
   &productos[i].precio,
   &productos[i].unidades);
 }//y los guardamos la información en un vector de estructuras
-for(j=0;j<M;j++)
+/*for(j=0;j<M;j++)
 {//Leemos la información y la guardamos en un vector de estructuras
 n=fscanf(pf2,"%[^;];%[^;];%i\n",clasificaciones[j].letra,clasificaciones[j].TIPO,&clasificaciones[j].NTIPO);
-}
+}*/
 fclose(pf); // Cerramos fichero
 fclose(pf2); // Cerramos fichero
 	
@@ -233,6 +233,7 @@ void catalogo_completo()
 {
 	int i,m,k,a,j;
 	producto productos[N];
+	clasificacion clasificaciones[M];
 	
 	printf("\n\tCAT%cLOGO\n",181);
 	
@@ -241,7 +242,7 @@ void catalogo_completo()
 	//printf("%s", clasificaciones[j].TIPO);
 	//for(i=0;i<clasificaciones[j].NTIPO;i++)
 	
-	leer_catalogo(productos,N);
+	leer_catalogo(productos,N,clasificaciones,M);
 	
 	for(i=0;i<N;i++)
 	{
@@ -275,13 +276,14 @@ void catalogo_completo()
    comprando();
 }
 
-void categorias(/*producto productos[], int dimension,*/clasificacion clasificaciones[],int dimension1)
+void categorias()
 {	
 int p=0,i;//p es una bandera que nos sirve para saber si el usuario a introducido un caracter válido o no y de esta forma saber si se lo tenemos que volver a pedir 
 char eleccion;//mejor sería cambiar eleccion una cadena de caracteres por si el usuario en vez introoducir una letra mal, introduce varias letra, numero y simbolo mal
 producto productos[N];
+clasificacion clasificaciones[M];
 
-leer_catalogo(productos,N);
+leer_catalogo(productos,N,clasificaciones,M);
 
 printf("\n\tCATEGOR%cAS\n",214);
 printf("\n Elige la categor%ca:\n",161);
@@ -294,12 +296,12 @@ switch (eleccion)
 {
 case 'C':
 case'c':
-	evalua(productos,N,clasificaciones,M,0);
+	evalua(0);
     break;
     
 case 'P':
 case 'p':
-    evalua(productos,N,clasificaciones,M,1);
+    evalua(1);
     break;
     
 /*case 'S':
@@ -326,11 +328,17 @@ default:
 }while(p=1);
 }
 	
-void evalua(producto productos[], int dimension,clasificacion clasificaciones[],int dimension1,int j)//función que te muestra las categorías,int j);//función que compara si la "eleccion" concide con el tipo y manda imprimir productos del mismo tipo
+void evalua(int j)//función que te muestra las categorías,int j);//función que compara si la "eleccion" concide con el tipo y manda imprimir productos del mismo tipo
 {
 	
   int m=0;
   int p=0;
+  
+  producto productos[N];
+  clasificacion clasificaciones[M];
+  
+  leer_catalogo(productos,N,clasificaciones,M);
+  
   printf("%s\n", clasificaciones[j].TIPO);//imprime el tipo de producto Ejemplo imprime la palabra Condensador almacenada en el vector de estructuras "clasificciones"
   for(p=0;p<N;p++)
   {
@@ -481,6 +489,7 @@ void filtro_precio(){//Función que filtra el catálogo de manera que solo muestre
 	float a, b;//Límites de precios a filtrar
 	int i, flag=0;//auxiliares
 	producto productos[N];
+	clasificacion clasificaciones[M];
 	
 	printf("Precios\n");
 	
@@ -490,7 +499,7 @@ void filtro_precio(){//Función que filtra el catálogo de manera que solo muestre
 		printf("Indique los dos extremos del intervalo de precio\n\n");
 		scanf(" %f %f", &a, &b);
 		
-		leer_catalogo(productos,N);//Leemos el catalogo y guardamos los datos en un vectores de estructuras
+		leer_catalogo(productos,N,clasificaciones,M);//Leemos el catalogo y guardamos los datos en un vectores de estructuras
 		
 		for(i=0;i<N;i++)
 		{
@@ -524,7 +533,7 @@ void filtro_precio(){//Función que filtra el catálogo de manera que solo muestre
 	comprando();//función compra
 }
 
-void leer_catalogo(producto productos[],int dimension){
+void leer_catalogo(producto productos[],int dimension,clasificacion clasificaciones[],int dimension1){
 	
 	int i=0;
 	int n, h;//auxiliar para lectura de ficheros
@@ -540,6 +549,13 @@ void leer_catalogo(producto productos[],int dimension){
 	df=fopen("lista_de_productos.txt","r");
 	//Comprobamos si hay error al abrir el fichero
 	if(df==NULL) printf("Error al abrir el fichero lista_de_productos.");
+	
+	FILE *tf;
+	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
+	tf=fopen("lista_de_tipos.txt","r");
+	//Comprobamos si hay error al abrir el fichero
+	if(tf==NULL) printf("Error al abrir el fichero lista_de_productos.");
+	
 	
 	for(i=0;i<N;i++)
 		{
@@ -557,8 +573,19 @@ void leer_catalogo(producto productos[],int dimension){
 		h=fscanf(pf,"%f;%i\n",
   			&productos[i].precio,
   			&productos[i].unidades);//leemos los precios, y el número de unidades
+  				
+				  //Leemos la información y la guardamos en un vector de estructuras
+		n=fscanf(tf,"%[^;];%[^;];%i\n",
+			clasificaciones[i].letra,
+			clasificaciones[i].TIPO,
+			&clasificaciones[i].NTIPO);
+
   			
   		}
+  		
+  		fclose(pf); // Cerramos fichero
+		fclose(df); // Cerramos fichero
+		fclose(tf); // Cerramos fichero	
 }
 			
 
