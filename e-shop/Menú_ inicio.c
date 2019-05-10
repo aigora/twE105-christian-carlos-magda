@@ -171,6 +171,9 @@ void main()
 //Función de registro
  
 void registro(){
+	//indice de iteración.
+	int i;
+	
 	//Auxiliar para comprobar si los datos son correctos.
 	int flag;
 	//Iteracion 
@@ -227,9 +230,27 @@ void registro(){
 	//Password
 	printf("\n\tPassword: ");
 	scanf(" %s[16]",persona1.password);
-	
+//ERROR, LA CONTRASEÑA NO PUEDE ESCRIBIRSE, NO SALTA DE LÍNEA AL PULSAR ENTER.
+/* while(persona1.password[i]!=16){
+        //Capturamos carácter 
+        persona1.password[i]=getch();   
+        //Si es un carácter válido y no se ha sobrepasado el límite de 20 caracteres se imprime un asterisco 
+        if(persona1.password[i]>32 && i<20) { 
+             putchar('*'); 
+             i++; 
+        } 
+        //Si se pulsa la tecla RETROCESO, se retrocede un carácter, se imprime un espacio para eliminar el asterisco y se vuelve a retroceder para que el siguiente asterisco se coloque a continuación del anterior. 
+        else
+      if(persona1.password[i]==8 && i>0){ 
+               putchar(8); 
+               putchar(' '); 
+               putchar(8); 
+               i--;  
+            }
+		}*/
+		
 	//Fecha de cumpleaños
-	printf("\n\tEscriba la su fecha con el formato: (2/3/1987) separando los n%cmeros con espacios\n",163);
+	printf("\n\tEscriba la fecha con el formato: (2/3/1987) separando los n%cmeros con espacios\n",163);
 	printf("\n\tFecha de nacimiento : ");
 	scanf(" %i %i %i",
 			&nacimiento.day,&nacimiento.month,&nacimiento.year);
