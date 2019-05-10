@@ -74,9 +74,12 @@ void main()
 	char option_cat;
     int m0=0,m=0,m1=0,i;
     int n=0,j;//variables locales. n1 número de tipos
+    
     producto productos[N];//vector de estructuras//Perpiñan:la dimension del vector tiene que coincidir con el número de productos en tu lista
     clasificacion clasificaciones[M];//vector de estructuras
+    
     FILE *pf,*pf1,*pf2/*,*pf3*/;//puntero que señala a fichero 
+    
     pf = fopen("lista_de_productos.txt", "r");//Abrimos el fichero
     pf1 =fopen("lista_de_productos_1.txt","r");
     pf2 = fopen("lista_de_tipos.txt", "r");//Abrimos el fichero que contiene letras que se corresponden al tipo de producto, los nombres de los tipos de producto 
@@ -92,8 +95,8 @@ void main()
 	printf("\n\t         ______                 _______    __    __    _______    _____");
 	printf("\n\t       (  __   )               (  _____)  (  )  (  )  (  ___  )  (  __ )");
 	printf("\n\t      (  (__)   )    _____     (  )____   (  )__(  )  ( (   ) )  ( (__) )");
-	printf("\n\t     (   ______)    (_____)    (_____  )  (   __   )  ( (   ) )  (  ___) ");
-	printf("\n\t      ( (______                 ____(  )  (  )  (  )  ( (___) )  ( )");
+	printf("\n\t     (    _____)    (_____)    (_____  )  (   __   )  ( (   ) )  (  ___) ");
+	printf("\n\t      (  (_____                 ____(  )  (  )  (  )  ( (___) )  ( )");
 	printf("\n\t       (_______)               (_______)  (__)  (__)  (_______)  (_)");
 	printf("\n\n\n\n\t\t");
 	system ("pause");//El programa hace una pausa, espera a que el usuario pulse una tecla para continuar.
@@ -227,24 +230,12 @@ void catalogo_completo()
 	system("cls");
 	
 	printf("\n\tCAT%cLOGO\n",181);
-	
-	//for (j=0;j<M;j++)
-    //{
-	//printf("%s", clasificaciones[j].TIPO);
-	//for(i=0;i<clasificaciones[j].NTIPO;i++)
-	
+		
 	leer_catalogo(productos,N);
 	
 	for(i=0;i<N;i++)
 	{
-	/*m=0;
-	for(k=0;k<4;k++)
-        {
-           if(*productos[i].Especificaciones[k].Descripcion==0)//Doble igual de pregunta, no de asignación//productos[0].Especificaciones[3].todo esto es Descripcion es un pruntero y aunque ponga *()no me da el valor
-           m++;
-        }
-    //Doble igual de pregunta, no de asignación//printf("%s\n\tEspecificaciones:%s\n\tCodigo:%s\n"    
-    if(m==0)*/
+
 	printf("%s\n\tEspecificaciones:\n\t\t%s\n\t\t%s\n\t\t%s\n\tCodigo: %s\n",
 	       productos[i].nombre,
 	       productos[i].Especificaciones[0].Descripcion,
@@ -254,15 +245,7 @@ void catalogo_completo()
 	printf("\tPrecio: %f\n\tUnidades: %i\n\n",
            productos[i].precio,
            productos[i].unidades);
-	 /*else
-   {
-   printf("%s %s %s %s\n",
-	       productos[i].nombre,
-	       productos[i].Especificaciones[0].Descripcion,
-	       productos[i].Especificaciones[1].Descripcion,
-	       productos[i].codigo);
-   }
-   }*/  
+
    }   
    comprando();
 }
