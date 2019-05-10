@@ -17,15 +17,18 @@ typedef struct{
     char password[16];
 }usuario; 
 
-//funciÛn de registro.
+//FunciÛn de registro.
 void registro();
 
-//funciÛn del login.
-void login();
+//FunciÛn del login.
+void login(char *p);
 
 void main()
 {
-	char nick_usuario[16];
+	char nick_usuario[16];//Cadena que almacena el nombre del usuario con sesiÛn iniciada
+	//Definimos un puntero que apunta a nick_usuario, lo usaremos para almacenar en este la cadena nick de la funciÛn login
+	char *p;
+	p=nick_usuario;
 	
 	
 	//Pantalla de inicio
@@ -76,7 +79,7 @@ void main()
 						{
 							case 'c':
 							{
-								//CAT√ÅLOGO COMPLETO
+								//CAT¡LOGO COMPLETO
 								system("cls");
 								printf("\n\tCAT%cLOGO\n",181);
 								system("pause");
@@ -102,7 +105,7 @@ void main()
 							}
 							case 'k':
 							{
-								//CATEGOR√çAS
+								//CATEGORÕAS
 								system("cls");
 								printf("\n\tCATEGOR%cAS\n",214);
 								printf("\n Elige la categor%ca\n: ",161);
@@ -111,9 +114,9 @@ void main()
 							}
 							default:
 							{
-								//CARACTER NO V√ÅLIDO
+								//CARACTER NO V¡LIDO
 								system("cls");
-								printf("Caracter introducido no v√°lido.");
+								printf("Caracter introducido no v%clido.",160);
 								system("pause");
 								break;
 									
@@ -135,12 +138,12 @@ void main()
 				}	
     			case 'i':
     				{
-    					//INICIO DE SESI√ìN
+    					//INICIO DE SESI”N
     					system("cls");
     					printf("\n\tINICIO DE SESI%cN\n",224);
     					//FunciÛn para el inicio de sesiÛn
     					//Devuelve el nick del usuario iniciado una vez la sesiÛn se inicia correctamente
-    					login();
+    					login(p);
     					printf("\n");
     					system("pause");
     					break;
@@ -153,7 +156,7 @@ void main()
 				}
 			default:
 				{
-					//CARACTER NO V√ÅLIDO
+					//CARACTER NO V¡LIDO
 					printf("\n\tEl caracter introducido no es v%clido\n",160);
 					system("pause");
 					break;
@@ -165,12 +168,12 @@ void main()
 	printf("\n\t%cHASTA LA PR%cXIMA!",173,224);
 }
 
-//funciÛn de registro
+//FunciÛn de registro
  
 void registro(){
-	//auxiliar para comprobar si los datos son correctos.
+	//Auxiliar para comprobar si los datos son correctos.
 	int flag;
-	//iteracion 
+	//Iteracion 
 	int n;
 	//Vector que almacena las estructuras de los usuarios registrados
 	usuario registrados[100];
@@ -213,7 +216,12 @@ void registro(){
 		flag=strcmp(registrados[n].nickname,persona1.nickname);
 		n++;
 	}
-	if (flag==0) printf("\n\tUsuario ya registrado\n");
+	if (flag==0) 
+	{
+		printf("\n\tUsuario ya registrado\n");
+		system ("pause");
+		system ("cls");
+	}
 	else
 	{
 	//Password
@@ -253,8 +261,10 @@ void registro(){
 
 //funciÛn login
 
-void login ()
+void login (char *p)
 {
+	//Indice de iteraciÛn
+	int i;
 	//auxiliar para comprobar si los datos son correctos.
 	int flag;
 	//iteracion 
@@ -316,6 +326,13 @@ void login ()
 		}
     }while(flag==1);
     
+    
+    //AsignaciÛn de la cadena almacenada en nick a la que guarda el nombre del usuario cuya sesiÛn est· iniciada.
+    
+  	for (i=0;i<16;i++)
+  	{
+  		*(p+i)=nick[i];
+	}
 } 
 
 
