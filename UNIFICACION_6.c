@@ -1,6 +1,13 @@
 //MENÃš DE INICIO de e-shop
 //ESTE ES EL PROGRAMA DEFINITIVO DE TU GRUPO, SIMPLEMENTE TIENES QUE AGREGARLE EL PROTOTIPO Y LA DEFINICIÓN DE LA FUNCIÓN REGISTRO Y YA
 
+
+//
+//
+// ESCRIBIR LAS OFERTAS Y DECIDIR EN CUALES LAS PONEMOS
+//
+//
+
 #include <stdio.h>
 #include <stdlib.h> /* system */
 #include <string.h> /*strcmp*/
@@ -51,10 +58,11 @@ typedef struct
 void catalogo_completo();//prototipo de la función
 void categorias();
 void evalua(int j);//función que compara si la elección concide con el tipo y manda imprimir productos del mismo tipo
-void ofertas(producto productos[],int dimension);
+void ofertas(/*producto productos[],int dimension*/);
 void comprando();
 void filtro_precio();//función que filtra en base a un intervalo de precio dado por el usuario
-void leer_catalogo(producto productos[],int dimension,clasificacion clasificaciones[],int dimension1);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
+void leer_catalogo(producto productos[],int dimension);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
+void leer_clase(clasificacion clasificaciones[],int dimension1);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
 //función de registro.
 //void registro();
 
@@ -233,7 +241,6 @@ void catalogo_completo()
 {
 	int i,m,k,a,j;
 	producto productos[N];
-	clasificacion clasificaciones[M];
 	
 	printf("\n\tCAT%cLOGO\n",181);
 	
@@ -242,7 +249,7 @@ void catalogo_completo()
 	//printf("%s", clasificaciones[j].TIPO);
 	//for(i=0;i<clasificaciones[j].NTIPO;i++)
 	
-	leer_catalogo(productos,N,clasificaciones,M);
+	leer_catalogo(productos,N);
 	
 	for(i=0;i<N;i++)
 	{
@@ -280,10 +287,6 @@ void categorias()
 {	
 int p=0,i;//p es una bandera que nos sirve para saber si el usuario a introducido un caracter válido o no y de esta forma saber si se lo tenemos que volver a pedir 
 char eleccion;//mejor sería cambiar eleccion una cadena de caracteres por si el usuario en vez introoducir una letra mal, introduce varias letra, numero y simbolo mal
-producto productos[N];
-clasificacion clasificaciones[M];
-
-leer_catalogo(productos,N,clasificaciones,M);
 
 printf("\n\tCATEGOR%cAS\n",214);
 printf("\n Elige la categor%ca:\n",161);
@@ -337,7 +340,8 @@ void evalua(int j)//función que te muestra las categorías,int j);//función que c
   producto productos[N];
   clasificacion clasificaciones[M];
   
-  leer_catalogo(productos,N,clasificaciones,M);
+  leer_catalogo(productos,N);//Leemos los productos y guardamos los datos en un vectores de estructuras
+  leer_clase(clasificaciones,M);//Leemos las clases de producto y guardamos los datos en un vectores de estructuras
   
   printf("%s\n", clasificaciones[j].TIPO);//imprime el tipo de producto Ejemplo imprime la palabra Condensador almacenada en el vector de estructuras "clasificciones"
   for(p=0;p<N;p++)
@@ -387,10 +391,14 @@ void evalua(int j)//función que te muestra las categorías,int j);//función que c
 
 //Filtro de ofertas
 //PARTE 5
-void ofertas(producto productos[],int dimension)
+void ofertas(/*producto productos[],int dimension*/)//Las ofertas son fijas de cada objeto, no se actualizan cada vez que se abre el programa
 {
 char letra1[10]="oferta";
 int p,m=0;//N sigue siendo el número de productos. i contador
+producto productos[N];
+
+leer_catalogo(productos,N);//Leemos los productos y guardamos los datos en un vectores de estructuras
+
 for(p=0;p<N;p++)
   {
   	//printf("%s",productos[0].estado);
@@ -414,7 +422,7 @@ for(p=0;p<N;p++)
 
 //SOLO FALTA AGREGAR LA PARTE DE COMPRANDO. RECUERDA QUE ESA PARTE SE TIENE QUE MOSTRAR SOLO SI EL USUARIO A INICIADO SESIÓN
 //FALTA AGREGAR LA PARTE DE CARRITO. TIENES QUE DESARROLLAR ESA PARTE POR SEPARADO Y LUEGO AGRAGARLA  A ESTE CÓDIGO FINAL
-void comprando(void)
+void comprando()
 {
 char eleccion;
 char seguir;
@@ -489,8 +497,9 @@ void filtro_precio(){//Función que filtra el catálogo de manera que solo muestre
 	float a, b;//Límites de precios a filtrar
 	int i, flag=0;//auxiliares
 	producto productos[N];
-	clasificacion clasificaciones[M];
-	
+
+	leer_catalogo(productos,N);//Leemos el catalogo y guardamos los datos en un vectores de estructuras
+
 	printf("Precios\n");
 	
 	do
@@ -499,7 +508,7 @@ void filtro_precio(){//Función que filtra el catálogo de manera que solo muestre
 		printf("Indique los dos extremos del intervalo de precio\n\n");
 		scanf(" %f %f", &a, &b);
 		
-		leer_catalogo(productos,N,clasificaciones,M);//Leemos el catalogo y guardamos los datos en un vectores de estructuras
+		
 		
 		for(i=0;i<N;i++)
 		{
@@ -533,7 +542,7 @@ void filtro_precio(){//Función que filtra el catálogo de manera que solo muestre
 	comprando();//función compra
 }
 
-void leer_catalogo(producto productos[],int dimension,clasificacion clasificaciones[],int dimension1){
+void leer_catalogo(producto productos[],int dimension){
 	
 	int i=0;
 	int n, h;//auxiliar para lectura de ficheros
@@ -549,12 +558,6 @@ void leer_catalogo(producto productos[],int dimension,clasificacion clasificacio
 	df=fopen("lista_de_productos.txt","r");
 	//Comprobamos si hay error al abrir el fichero
 	if(df==NULL) printf("Error al abrir el fichero lista_de_productos.");
-	
-	FILE *tf;
-	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
-	tf=fopen("lista_de_tipos.txt","r");
-	//Comprobamos si hay error al abrir el fichero
-	if(tf==NULL) printf("Error al abrir el fichero lista_de_productos.");
 	
 	
 	for(i=0;i<N;i++)
@@ -574,18 +577,35 @@ void leer_catalogo(producto productos[],int dimension,clasificacion clasificacio
   			&productos[i].precio,
   			&productos[i].unidades);//leemos los precios, y el número de unidades
   				
-				  //Leemos la información y la guardamos en un vector de estructuras
-		n=fscanf(tf,"%[^;];%[^;];%i\n",
-			clasificaciones[i].letra,
-			clasificaciones[i].TIPO,
-			&clasificaciones[i].NTIPO);
-
-  			
   		}
   		
   		fclose(pf); // Cerramos fichero
 		fclose(df); // Cerramos fichero
-		fclose(tf); // Cerramos fichero	
 }
 			
+
+
+void leer_clase(clasificacion clasificaciones[],int dimension1){
+	int i=0;
+	int n;//auxiliar para lectura de ficheros
+	
+	FILE *tf;
+	//Abrimos un fichero, en modo lectura en el que se almacenaran los datos de los usuarios
+	tf=fopen("lista_de_tipos.txt","r");
+	//Comprobamos si hay error al abrir el fichero
+	if(tf==NULL) printf("Error al abrir el fichero lista_de_productos.");
+	
+	
+	for(i=0;i<M;i++)
+		{//Leemos la información y la guardamos en un vector de estructuras
+		
+		n=fscanf(tf,"%[^;];%[^;];%i\n",
+			clasificaciones[i].letra,
+			clasificaciones[i].TIPO,
+			&clasificaciones[i].NTIPO);
+		
+  		}
+  		
+		fclose(tf); // Cerramos fichero	
+}
 
