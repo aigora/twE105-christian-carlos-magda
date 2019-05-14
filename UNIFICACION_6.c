@@ -404,12 +404,12 @@ void comprando()
 	CODE CODIGOS[20];//vector de estructuras que guarda los códigos de los productos que el usuario desea añadir a su carrito
 	producto productos[N];
 	int unidades[20];//vector que guarda las de los productos que el usuario desea añadir a su carrito
-	int i=0,b=0,g=0,t=0,j=0;//b=bandera para saber si segimos o no ejecutando el bucle do while
-	int flag=0;
+	int i=0,b=0,g=0,t=0,j=0,h=0;//b=bandera para saber si segimos o no ejecutando el bucle do while
+	int flag=1000;//AUXIALIAR PARA COMPROBAR EL CÓDIGO ELEGIDO PARA LA COMPRA
 	char fallo;//auxiliar para cuando no hay suficientes items en stock
 	
 	leer_catalogo(productos,N);
-	
+
 	 do{
 	printf("Indroduzca la letra (A) si desea anadir algo a su carrito\n");
 	scanf(" %c",&eleccion);
@@ -419,40 +419,48 @@ void comprando()
 		case 'a':
 		{	//do{
 				printf("Codigo:");                                                                        
-			    scanf("%s",CODIGOS[i].CODIGOCOMPRA);//no poner & porque es cadena de caracteres pg 54 teoría tema 4
-		/*	    for(j=0;j<N;j++){
-			    	if(CODIGOS[i].CODIGOCOMPRA==productos[j].codigo) {
-			    		flag=j;
-			    		
-					}
-			    	else flag=0;
-				}   */
+			    scanf(" %s",CODIGOS[i].CODIGOCOMPRA);//no poner & porque es cadena de caracteres pg 54 teoría tema 4
+			    
+			    for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+			    	if(strcmp(CODIGOS[i].CODIGOCOMPRA,productos[j].codigo)==0) {
+			    		flag=1;
+			    		h=j;//FLAG PARA INDICAR LUEGO EL NUMERO Y PRECIO
+					}	
+				}
 				
+				if(flag==1){
+					
+					printf("\nUnidades:");
+					scanf("%i",&unidades[i]);
+					
+					if(unidades[i]>productos[h].unidades){
+						
+						printf("Lo sentimos, pero no tenemos suficientes unidades en stock.\n");
+						
+						do{
+							printf("Para realizar la compra de %i unidades pulse 'c', y para cancelar la compra pulse 'h'.\n",productos[h].unidades);
+							scanf(" %c",&fallo);
+							switch(fallo){
+								case'c':
+									//compra el numero indicado
+									t=1;
+									break;
+								case'h':
+									b=1;
+									t=1;
+									break;
+								default:
+									printf("Opcion no valida, intentelo de nuevo.\n");
+									t=0;
+									break;
+							}	
+						} while(t==0);
+					}   
+				}
 				
-				printf("\nUnidades:");
-				scanf("%i",&unidades[i]);
-				
-		/*		if(unidades[i]>productos[flag].unidades){
-					printf("Lo sentimos, pero no tenemos suficientes unidades en stock.\n");
-					do{
-						printf("Para realizar la compra de %i unidades pulse 'c', y para cancelar la compra pulse 'h'.\n",productos[flag].unidades);
-						scanf(" %c",&fallo);
-						switch(fallo){
-							case'c':
-								//compra el numero indicado
-								t=1;
-								break;
-							case'h':
-								b=1;
-								t=1;
-								break;
-							default:
-								printf("Opcion no valida, intentelo de nuevo.\n");
-								t=0;
-								break;
-						}	
-					} while(t==0);
-				}   */
+				else{
+					printf("\tCodigo no valido\n\n");
+				}
 				
 				i++;
 				
@@ -468,11 +476,52 @@ void comprando()
 				case 'A':
 				case 'a':
 				{
-					printf("Codigo:\n");                                                                        
-			        scanf("%s",CODIGOS[i].CODIGOCOMPRA);
-				    printf("Unidades:");
-				    scanf("%i",&unidades[i]);
-				    i++;
+					printf("Codigo:");                                                                        
+				    scanf(" %s",CODIGOS[i].CODIGOCOMPRA);//no poner & porque es cadena de caracteres pg 54 teoría tema 4
+				    
+				    for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+				    	if(strcmp(CODIGOS[i].CODIGOCOMPRA,productos[j].codigo)==0) {
+				    		flag=1;
+				    		h=j;//FLAG PARA INDICAR LUEGO EL NUMERO Y PRECIO
+						}	
+					}
+					
+					if(flag==1){
+						
+						printf("\nUnidades:");
+						scanf("%i",&unidades[i]);
+						
+						if(unidades[i]>productos[h].unidades){
+							
+							printf("Lo sentimos, pero no tenemos suficientes unidades en stock.\n");
+							
+							do{
+								printf("Para realizar la compra de %i unidades pulse 'c', y para cancelar la compra pulse 'h'.\n",productos[h].unidades);
+								scanf(" %c",&fallo);
+								switch(fallo){
+									case'c':
+										//compra el numero indicado
+										t=1;
+										break;
+									case'h':
+										b=1;
+										t=1;
+										break;
+									default:
+										printf("Opcion no valida, intentelo de nuevo.\n");
+										t=0;
+										break;
+								}	
+							} while(t==0);
+						}   
+					}
+					
+					else{
+						printf("\tCodigo no valido\n\n");
+					}
+					
+					i++;
+				
 			        break;
 			    }
 			    case 'C':
