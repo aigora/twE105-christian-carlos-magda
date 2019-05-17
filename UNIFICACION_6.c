@@ -221,7 +221,6 @@ void main()
 }
 
 
-
 void catalogo_completo()
 {
 	int i,m,k,a,j;
@@ -403,7 +402,7 @@ void comprando()
 	//si el usuario en vez introoducir una letra mal, introduce varias letras, numero y simbolo, y así evitamos que todo el programa deje de funcionar
 	CODE CODIGOS[20];//vector de estructuras que guarda los códigos de los productos que el usuario desea añadir a su carrito
 	int unidades[20];//vector que guarda las de los productos que el usuario desea añadir a su carrito
-	int i=0,b=0,g=0;//b=bandera para saber si segimos o no ejecutando el bucle do while
+	int i=0,b=0,g=0;//b=bandera para saber si seguimos o no ejecutando el bucle do while
 	 do{
 	printf("Indroduzca la letra (A) si desea anadir algo a su carrito\n");
 	scanf(" %c",&eleccion);
@@ -451,7 +450,7 @@ void comprando()
 					break;
 			    }
 			    }//llave del switch  
-			    }while(b==0);//se jecuta mientra la bandera no cambia de valor. mientra la expresión es verdadera
+			    }while(b==0);//se ejecuta mientras la bandera no cambia de valor. mientras la expresión es verdadera
 			     g=1;//ya hemos ababado exitosamente la opreacion de añadir productos a carrito
 			     break;
 	    }
