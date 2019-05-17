@@ -63,6 +63,8 @@ void comprando();
 void filtro_precio();//función que filtra en base a un intervalo de precio dado por el usuario
 void leer_catalogo(producto productos[],int dimension);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
 void leer_clase(clasificacion clasificaciones[],int dimension1);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
+void mostrar_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i);
+void opciones_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i);
 //función de registro.
 //void registro();
 
@@ -219,6 +221,7 @@ void main()
 	system ("color E0");//cambia el color del fondo(F) y del texto(0).
 	printf("\n\t%cHASTA LA PR%cXIMA!",173,224);
 }
+
 
 
 void catalogo_completo()
@@ -403,154 +406,178 @@ void comprando()
 	CODE CODIGOS[20];//vector de estructuras que guarda los códigos de los productos que el usuario desea añadir a su carrito
 	producto productos[N];
 	int unidades[20];//vector que guarda las de los productos que el usuario desea añadir a su carrito
-	int i=0,b=0,g=0,t=0,j=0,h=0;//b=bandera para saber si segimos o no ejecutando el bucle do while
-	int flag=1000;//AUXIALIAR PARA COMPROBAR EL CÓDIGO ELEGIDO PARA LA COMPRA
+	int i=0,b=0,g=0,t=0,j=0;//b=bandera para saber si segimos o no ejecutando el bucle do while
+	int flag=0;
 	char fallo;//auxiliar para cuando no hay suficientes items en stock
 	
 	leer_catalogo(productos,N);
+	
 	 do{
 	printf("Indroduzca la letra (A) si desea anadir algo a su carrito\n");
 	scanf(" %c",&eleccion);
-	switch (eleccion)
-	   {
-		case 'A':
-		case 'a':
-		{	//do{
-				printf("Codigo:");                                                                        
-			    scanf(" %s",CODIGOS[i].CODIGOCOMPRA);//no poner & porque es cadena de caracteres pg 54 teoría tema 4
-			    
-			    for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
-			    	if(strcmp(CODIGOS[i].CODIGOCOMPRA,productos[j].codigo)==0) {
-			    		flag=1;
-			    		h=j;//FLAG PARA INDICAR LUEGO EL NUMERO Y PRECIO
-					}	
-				}
-				
-				if(flag==1){
-					
-					printf("\nUnidades:");
-					scanf("%i",&unidades[i]);
-					
-					if(unidades[i]>productos[h].unidades){
-						
-						printf("Lo sentimos, pero no tenemos suficientes unidades en stock.\n");
-						
-						do{
-							printf("Para realizar la compra de %i unidades pulse 'c', y para cancelar la compra pulse 'h'.\n",productos[h].unidades);
-							scanf(" %c",&fallo);
-							switch(fallo){
-								case'c':
-									//compra el numero indicado
-									t=1;
-									break;
-								case'h':
-									b=1;
-									t=1;
-									break;
-								default:
-									printf("Opcion no valida, intentelo de nuevo.\n");
-									t=0;
-									break;
-							}	
-						} while(t==0);
-					}   
-				}
-				
-				else{
-					printf("\tCodigo no valido\n\n");
-				}
-				
-				i++;
-				
-				do
-				{
-				printf("Opciones:\nSeguir Anadiendo productos(A)\nConfirmar su lista(C)\n");
-				scanf(" %c",&seguir);//guardamos la elección en una cadena de caracteres por si el usuario introduce muchos dígitos erroneamernte
-				//PONERLE UN ESPACIO A %c después de " SIEMPRE SOLO A %c no para los demás %i %f %s
-			//}while(seguir==1)
-			//el do while al comienzo del case A no es conveniente porque si el usuario introduce otro número a casualida. y quiere en realidad seguir añadiendo productos, no podría hacerlo
-				switch (seguir)
-				{
-				case 'A':
-				case 'a':
-				{
-					printf("Codigo:");                                                                        
-				    scanf(" %s",CODIGOS[i].CODIGOCOMPRA);//no poner & porque es cadena de caracteres pg 54 teoría tema 4
-				    
-				    for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
-				    	if(strcmp(CODIGOS[i].CODIGOCOMPRA,productos[j].codigo)==0) {
-				    		flag=1;
-				    		h=j;//FLAG PARA INDICAR LUEGO EL NUMERO Y PRECIO
-						}	
-					}
-					
-					if(flag==1){
-						
-						printf("\nUnidades:");
-						scanf("%i",&unidades[i]);
-						
-						if(unidades[i]>productos[h].unidades){
-							
-							printf("Lo sentimos, pero no tenemos suficientes unidades en stock.\n");
-							
-							do{
-								printf("Para realizar la compra de %i unidades pulse 'c', y para cancelar la compra pulse 'h'.\n",productos[h].unidades);
-								scanf(" %c",&fallo);
-								switch(fallo){
-									case'c':
-										//compra el numero indicado
-										t=1;
-										break;
-									case'h':
-										b=1;
-										t=1;
-										break;
-									default:
-										printf("Opcion no valida, intentelo de nuevo.\n");
-										t=0;
-										break;
-								}	
-							} while(t==0);
-						}   
-					}
-					
-					else{
-						printf("\tCodigo no valido\n\n");
-					}
-					
-					i++;
-				
-			        break;
-			    }
-			    case 'C':
-				case 'c'://en esta opción damos la orden de pasar la información al carrito FALTA DESARROLLAR ESTA PARTE MAÑANA CONTINUO
-				{
-					b=1;//bandera cambia Y se deja de ejecutar el bucle
-					//mostrarcarrito(CODIGOS,20,unidades,20,i);//i es el número de productos que se añade a la lista
-				    break;	
-			    }
-				default:
-				{	
-					//system("cls");
-			    	printf("Caracter introducido no valido");
-					b=0;
-					break;
-			    }
-			    }//llave del switch  
-			    }while(b==0);//se ejecuta mientras la bandera no cambia de valor. mientras la expresión es verdadera
-			     g=1;//ya hemos ababado exitosamente la opreacion de añadir productos a carrito
-			     break;
-	    }
-	    default:
-	    {
-	    	system("cls");
-			printf("Caracter introducido no valido");
-			g=0;
-			break;
-	    }
-	  }//Llave del switch
+switch (eleccion)
+   {
+	case 'A':
+	case 'a':
+	{	//do{
+			printf("Codigo:");                                                                        
+		    scanf("%s",CODIGOS[i].CODIGOCOMPRA);//no poner & porque es cadena de caracteres pg 54 teoría tema 4
+			printf("\nUnidades:");
+			scanf("%i",&unidades[i]);
+			i++;
+			do
+			{
+			printf("\nOpciones:\nSeguir Anadiendo productos(A)\nConfirmar su lista(C)\n");
+			scanf(" %c",&seguir);//guardamos la elección en una cadena de caracteres por si el usuario introduce muchos dígitos erroneamernte
+			//PONERLE UN ESPACIO A %c después de " SIEMPRE SOLO A %c no para los demás %i %f %s
+		//}while(seguir==1)
+		//el do while al comienzo del case A no es conveniente porque si el usuario introduce otro número a casualida. y quiere en realidad seguir añadiendo productos, no podría hacerlo
+			switch (seguir)
+			{
+			case 'A':
+			case 'a':
+			{
+				printf("\nCodigo:");                                                                        
+		        scanf("%s",CODIGOS[i].CODIGOCOMPRA);
+			    printf("\nUnidades:");
+			    scanf("%i",&unidades[i]);
+			    i++;
+		        break;
+		    }
+		    case 'C':
+			case 'c'://en esta opción damos la orden de pasar la información al carrito FALTA DESARROLLAR ESTA PARTE MAÑANA CONTINUO
+			{
+				b=1;//bandera cambia Y se deja de ejecutar el bucle
+				mostrar_carrito(CODIGOS,20,unidades,20,i);//i es el número de productos que se añade a la lista
+			    break;	
+		    }
+			default:
+			{	
+				//system("cls");
+		    	printf("Caracter introducido no valido");
+				b=0;
+				break;
+		    }
+		    }//llave del switch  
+		    }while(b==0);//se jecuta mientra la bandera no cambia de valor. mientra la expresión es verdadera
+		     g=1;//ya hemos ababado exitosamente la opreacion de añadir productos a carrito
+		     break;
+    }
+    default:
+    {
+    	system("cls");
+		printf("Caracter introducido no valido");
+		g=0;
+		break;
+    }
+}
 	  }while(g==0);
 }
+
+void mostrar_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i)//i te da el número de productos que ha comprado el usuario
+{
+	int m0,m1,g;
+	int m,j=0,k=0;
+	producto productos[N];
+	FILE *pf4;//puntero que señala a fichero 
+    pf4 = fopen("lista_provisional.txt", "w");//en modo write para modificarlo tantas veces como el usuario lo desee
+	leer_catalogo(productos,N);
+if (i!=0)
+{
+printf("\tProductos\t\t\t\t\tUnidades\t\t\t\t\tPrecio\n\n");//imprimimos los productos en pantalla según los códigos
+do
+{
+    g=0;//volvemos a recorrer todos los productos para buscar el producto que tenga el código del producto que me falta imprimir
+	do 
+	{   /*if(strcmp(CODIGOS[j].CODIGOCOMPRA,"no")==0)
+	    j++;//Pasamos al siguiente código Y ¿Que pasaría si el usuario introduce un código no válido, el bucle no terminaría? Resolver ese problema*/ //SI YA HE HECHO EL TRASLADE DE LOS PRODUCTOS, ENTONCES YA NO NECESITO ESTAS DOS LÍNEAS PORQUE TENGO QUE IMPRIMIR TODA LA LISTA
+	    m=strcmp(productos[g].codigo,CODIGOS[j].CODIGOCOMPRA);
+	    g++;
+	}while(m!=0);
+//for(k=0;k<i ;k++)
+printf("%i.%s\t\t\t\t\t",k+1,productos[g].nombre); //como estoy imprimiendo cadenas de caracteres de distinto tamaño por eso no se imprime todo en una misma fila
+printf("%i\t\t\t\t\t",unidades[j]);
+printf("%f\n",productos[g].precio*unidades[j]);//solucion 1 de poner espacios no funciona. ahora probar solucion 2 de poner la infor en distintos printf este problema es solo porque en una linea pones distiontos tipos de caracterres que quieres imprimir
+fprintf(pf4, "%s;", CODIGOS[j].CODIGOCOMPRA);
+fprintf(pf4, "%i\n", unidades[j]);
+j++;//Pasamos al siguiente codigo porque solo hay un codigo parar cada producto
+k++;//k es el contador del número de productos que se ha impreso y el bucle acaba cuando ya hemos imprimido los i productos
+}while(k!=i);//El bucle tiene que acabar cuando el vector de unidades se ha recorrido totalmente, porque eso significa que ya hemos impreso toda la lista 
+}
+opciones_carrito(CODIGOS,20,unidades,20,i);
+}
+    
+void opciones_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i)
+{
+FILE *pf5;
+pf5 = fopen("numero_tarjeta.txt", "a");//Abrimos el fichero para poder escribir en él
+char eleccion;
+long long int tarjeta;
+long int pin;
+int numprod,j,h;
+printf("\n\nIntroduce la letra correspondiente para\nModificar la compra\n\tCambiar unidades(C)\n\tQuitar productos(Q)\nAnular la compra(S)\nPagar(P)\nVolver a Menu Principal(M)\n");
+scanf(" %c",&eleccion);
+switch (eleccion)
+{
+case 'C':
+case 'c':
+	    printf("Seleccione el producto 1  2  3 ...\n");
+	    scanf("%i",&numprod);//número de producto
+	    printf("Introduzca las unidades que desee\n");
+	    scanf("%i",&unidades[numprod-1]);//NO NECESITAS PONER &???????????????PARA LLENA UNA COMPONENTE DE UN VECTOR DE ESTRUCTURA NO, PERO PARA UN VECTOR COMUN Y CORRIENTE
+	    system("cls");//limpia la pantalla
+	    mostrar_carrito(CODIGOS,20,unidades,20,i);//Damos la orden para que se imrpima la lista
+	    break;
+case 'Q':
+case 'q':
+        printf("Seleccione el producto 1. 2. 3. ...\n");
+	    scanf("%i",&numprod);//número de producto
+	    for(h=0;h<i-numprod;h++)
+	    {
+	    strcpy(CODIGOS[numprod-1+h].CODIGOCOMPRA,CODIGOS[numprod+h].CODIGOCOMPRA);//traslado el contenido para que si el usuario quisiera quitar de nuevo un producto de la lista, lo pueda hacer
+	    //Hago lo mismo para el vector de unidades
+	    //strcpy(unidades[numprod-1+h],unidades[numprod+h]);//pero strcpy solo copia cadena de caracteres, así que para trasladar números tendrás que pensar en otra cosa, porque si o si los número 
+		//y los código deben ser trasladados para que se correspondan
+	    }
+	    i--;//Ahora tengo un producto menos
+	    //printf("%s",CODIGOS[numprod-1].CODIGOCOMPRA);//Si hace la asignación
+	    //CODIGOS[numprod-1]=0;//Imagina que el usuario al hacer la compra introduce en una de las unidades de un producto un 0, eso significaría que no quiere ese producto, pero 
+		//igual introdujo el código y unidades a propósito. entonces, al hacer esta línea de código también estamos cubriendo esa posibilidad
+		//unidades[numprod-1]=0;//Esta línea es innecesaria
+		system("cls");//limpia la pantalla
+		//printf("Carrito vacio\n");
+		mostrar_carrito(CODIGOS,20,unidades,20,i);//Damos la orden para que se imrpima la lista
+		break;
+case 'S':
+case 's':
+	    for(j=0;j<i;j++)
+	    /*{
+        strcpy(CODIGOS[j].CODIGOCOMPRA,"0");
+		unidades[j]=0;
+	    }*/ //En realidad aquí solo debo limpiar la ventana y ya
+	    system("cls");//limpia la pantalla
+		printf("Carrito vacio\n");
+	    break;
+	    //Doy la orden de que se limpie la venta para que no aparesca ningún producto
+case 'P':
+case 'p':	
+        printf("Numero de tarjeta:");
+        scanf("%lli",&tarjeta);
+        fprintf(pf5, "%lli;", tarjeta);//Escribimos en el fichero
+        printf("\nPIN:");
+        scanf("%li",&pin);
+        fprintf(pf5, "%li\n", pin);//Escribimos el pin en la misma línea separado por ;
+        break;
+/*case 'M':
+case 'm':*/
+default:
+	    printf("Opcion no valida\n");
+	    break;
+}
+fclose(pf5);//cerramos el fichero aquí porque que si el usuario no quisiese alterar su lista y no optará por seleccionar alguna opción y defrente cerrase el programa, el fichero no quedaría sin cerrar
+}
+
+
     
 void filtro_precio(){//Función que filtra el catálogo de manera que solo muestre los objetos que pertenezcan a un intervalo de precios a elegir por el usuario.
 	float a, b;//Límites de precios a filtrar
@@ -667,4 +694,3 @@ void leer_clase(clasificacion clasificaciones[],int dimension1){
   		
 		fclose(tf); // Cerramos fichero	
 }
-
