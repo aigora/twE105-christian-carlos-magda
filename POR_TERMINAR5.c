@@ -597,28 +597,6 @@ void evalua(int flag,int j)//función que te muestra las categorías,int j);//func
   else
    printf("Para realizar compras debe iniciar sesion\n");
 
-  //for(i=0;i<clasificaciones[j].NTIPO;i++)
-  /*for(i=0;i<N;i++)
-  {
-  char m1=clasificaciones[j].letra[0];//Si utilizas esta linea de codigo te dará error porque dira que estay dando la direccion de memoria de un puntero a un caracter mm
-  char m2=productos[i].tipo[0];
-  m=strcmp(m1,m2);//de la libreria string,compara. letra[j]=letra del producto//AquI debe de estar el error poeque antes el compilador me dijo que clasificaciones[j].NTIPO era un puntero
-  //entonces lo que estarí haciendo aquíes comparar punteros
-  printf("%i\n",m);//nunca me imprime ningun producto porque estoy comparando dos punteros que siempre son distindos
-  printf("%c %c",m1,m2);
-  if (m==0)//si son iguales imprimo toda la información del producto//doble igual de pregunta, no de asignación
-  {
-    printf("%s\n\tEspecificaciones:\n\t\t%s\n\t\t%s\n\t\t%s\n\tCodigo: %s\n",
-	       productos[i].nombre,
-	       productos[i].Especificaciones[0].Descripcion,
-	       productos[i].Especificaciones[1].Descripcion,
-	       productos[i].Especificaciones[2].Descripcion,
-	       productos[i].codigo);
-	printf("\tPrecio: %f\n\tUnidades: %i\n\n",
-           productos[i].precio,
-           productos[i].unidades);
-  }
-  }*/
 }
 
 //Filtro de ofertas
@@ -661,6 +639,7 @@ void ofertas(int flag)//(/*producto productos[],int dimension*/)//Las ofertas so
 
 //SOLO FALTA AGREGAR LA PARTE DE COMPRANDO. RECUERDA QUE ESA PARTE SE TIENE QUE MOSTRAR SOLO SI EL USUARIO A INICIADO SESIÓN
 //FALTA AGREGAR LA PARTE DE CARRITO. TIENES QUE DESARROLLAR ESA PARTE POR SEPARADO Y LUEGO AGRAGARLA  A ESTE CÓDIGO FINAL
+
 void comprando()
 {
 	char eleccion;
@@ -670,71 +649,259 @@ void comprando()
 	CODE CODIGOS[20];//vector de estructuras que guarda los códigos de los productos que el usuario desea añadir a su carrito
 	producto productos[N];
 	int unidades[20];//vector que guarda las de los productos que el usuario desea añadir a su carrito
-	int i=0,b=0,g=0,t=0,j=0;//b=bandera para saber si segimos o no ejecutando el bucle do while
-	int flag=0;
+	int i=0,b=0,g=0,t=0,j=0,h=0,w=0;//b=bandera para saber si segimos o no ejecutando el bucle do while
+	int flag=1000;//AUXIALIAR PARA COMPROBAR EL CÓDIGO ELEGIDO PARA LA COMPRA
 	char fallo;//auxiliar para cuando no hay suficientes items en stock
 	
 	leer_catalogo(productos,N);
-	
+
 	 do{
 	printf("Indroduzca la letra (A) si desea anadir algo a su carrito\n");
 	scanf(" %c",&eleccion);
-switch (eleccion)
-   {
-	case 'A':
-	case 'a':
-	{	//do{
-			printf("Codigo:");                                                                        
-		    scanf("%s",CODIGOS[i].CODIGOCOMPRA);//no poner & porque es cadena de caracteres pg 54 teoría tema 4
-			printf("\nUnidades:");
-			scanf("%i",&unidades[i]);
-			i++;
-			do
-			{
-			printf("\nOpciones:\nSeguir Anadiendo productos(A)\nConfirmar su lista(C)\n");
-			scanf(" %c",&seguir);//guardamos la elección en una cadena de caracteres por si el usuario introduce muchos dígitos erroneamernte
-			//PONERLE UN ESPACIO A %c después de " SIEMPRE SOLO A %c no para los demás %i %f %s
-		//}while(seguir==1)
-		//el do while al comienzo del case A no es conveniente porque si el usuario introduce otro número a casualida. y quiere en realidad seguir añadiendo productos, no podría hacerlo
-			switch (seguir)
-			{
-			case 'A':
-			case 'a':
-			{
-				printf("\nCodigo:");                                                                        
-		        scanf("%s",CODIGOS[i].CODIGOCOMPRA);
-			    printf("\nUnidades:");
-			    scanf("%i",&unidades[i]);
-			    i++;
-		        break;
-		    }
-		    case 'C':
-			case 'c'://en esta opción damos la orden de pasar la información al carrito FALTA DESARROLLAR ESTA PARTE MAÑANA CONTINUO
-			{
-				b=1;//bandera cambia Y se deja de ejecutar el bucle
-				mostrar_carrito(CODIGOS,20,unidades,20,i);//i es el número de productos que se añade a la lista
-			    break;	
-		    }
-			default:
-			{	
-				//system("cls");
-		    	printf("Caracter introducido no valido");
-				b=0;
-				break;
-		    }
-		    }//llave del switch  
-		    }while(b==0);//se jecuta mientra la bandera no cambia de valor. mientra la expresión es verdadera
-		     g=1;//ya hemos ababado exitosamente la opreacion de añadir productos a carrito
-		     break;
-    }
-    default:
-    {
-    	system("cls");
-		printf("Caracter introducido no valido");
-		g=0;
-		break;
-    }
-}
+	switch (eleccion)
+	   {
+		case 'A':
+		case 'a':
+		{	//do{
+				printf("Codigo:");                                                                        
+			    scanf(" %s",CODIGOS[i].CODIGOCOMPRA);//no poner & porque es cadena de caracteres pg 54 teoría tema 4
+			    
+			    for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+			    	if(strcmp(CODIGOS[i].CODIGOCOMPRA,productos[j].codigo)==0) {
+			    		flag=1;
+			    		h=j;//FLAG PARA INDICAR LUEGO EL NUMERO Y PRECIO
+					}	
+				}
+				
+				if(flag==1){
+					
+					printf("\nUnidades:");
+					scanf("%i",&unidades[i]);
+					
+					if(unidades[i]>productos[h].unidades){
+						
+						printf("Lo sentimos, pero no tenemos suficientes unidades en stock.\n");
+						
+						do{
+							printf("Para realizar la compra de %i unidades pulse 'c', y para cancelar la compra pulse 'h'.\n",productos[h].unidades);
+							scanf(" %c",&fallo);
+							switch(fallo){
+								case'c':
+								{
+					
+									//compra el numero indicado
+									
+									FILE *pf;
+									//Abrimos un fichero, en el qeu sobreescribimos los datos almacenados en el vector de estructuras, de manera que se altere el numero de unidades
+									pf=fopen("lista_de_productos_1.txt","w");
+									//Comprobamos si hay error al abrir el fichero
+									if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+									
+									
+									for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+								    	if(j==h){
+											fprintf(pf,"%f;%i\n",productos[j].precio,0);//0 porque ha accedido a comprar todas las unidades posibles
+										}
+									
+										else{
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades);
+										}
+									}	
+
+								
+									fclose(pf);
+									
+									t=1;
+									break;
+									}
+								case'h':{
+									b=1;
+									t=1;
+									break;
+								}
+									
+								default:{
+									printf("Opcion no valida, intentelo de nuevo.\n");
+									t=0;
+									break;
+								}
+									
+							}	
+						} while(t==0);
+					}   
+					
+					else{
+						//compra el numero indicado
+									FILE *pf;
+									//Abrimos un fichero, en el qeu sobreescribimos los datos almacenados en el vector de estructuras, de manera que se altere el numero de unidades
+									pf=fopen("lista_de_productos_1.txt","w");
+									//Comprobamos si hay error al abrir el fichero
+									if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+									
+									
+									for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+								    	if(j==h){
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades-unidades[i]);
+										}
+									
+										else{
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades);
+										}
+									}	
+
+									
+									
+									fclose(pf);
+					}
+				}
+				
+				else{
+					printf("\tCodigo no valido\n\n");
+				}
+				
+				i++;
+				
+				do
+				{
+				printf("Opciones:\nSeguir Anadiendo productos(A)\nConfirmar su lista(C)\n");
+				scanf(" %c",&seguir);//guardamos la elección en una cadena de caracteres por si el usuario introduce muchos dígitos erroneamernte
+				//PONERLE UN ESPACIO A %c después de " SIEMPRE SOLO A %c no para los demás %i %f %s
+			//}while(seguir==1)
+			//el do while al comienzo del case A no es conveniente porque si el usuario introduce otro número a casualida. y quiere en realidad seguir añadiendo productos, no podría hacerlo
+				switch (seguir)
+				{
+				case 'A':
+				case 'a':
+				{
+					printf("Codigo:");                                                                        
+				    scanf(" %s",CODIGOS[i].CODIGOCOMPRA);//no poner & porque es cadena de caracteres pg 54 teoría tema 4
+				    
+				    for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+				    	if(strcmp(CODIGOS[i].CODIGOCOMPRA,productos[j].codigo)==0) {
+				    		flag=1;
+				    		h=j;//FLAG PARA INDICAR LUEGO EL NUMERO Y PRECIO
+						}	
+					}
+					
+					if(flag==1){
+						
+						printf("\nUnidades:");
+						scanf("%i",&unidades[i]);
+						
+						if(unidades[i]>productos[h].unidades){
+							
+							printf("Lo sentimos, pero no tenemos suficientes unidades en stock.\n");
+							
+							do{
+								printf("Para realizar la compra de %i unidades pulse 'c', y para cancelar la compra pulse 'h'.\n",productos[h].unidades);
+								scanf(" %c",&fallo);
+								switch(fallo){
+									case'c':
+									{
+							
+										//compra el numero indicado
+										
+										FILE *pf;
+										//Abrimos un fichero, en el qeu sobreescribimos los datos almacenados en el vector de estructuras, de manera que se altere el numero de unidades
+										pf=fopen("lista_de_productos_1.txt","w");
+										//Comprobamos si hay error al abrir el fichero
+										if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+										
+										
+										for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+									    	if(j==h){
+												fprintf(pf,"%f;%i\n",productos[j].precio,0);//0 porque accepta comprar todo el stock
+											}
+										
+											else{
+												fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades);
+											}
+										}	
+	
+										fclose(pf);
+										
+										t=1;
+										break;
+										}
+									case'h':{
+										b=1;
+										t=1;
+										break;
+									}
+										
+									default:{
+										printf("Opcion no valida, intentelo de nuevo.\n");
+										t=0;
+										break;
+									}
+										
+								}	
+							} while(t==0);
+						}
+						
+						else{
+							//compra el numero indicado
+							
+									FILE *pf;
+									//Abrimos un fichero, en el qeu sobreescribimos los datos almacenados en el vector de estructuras, de manera que se altere el numero de unidades
+									pf=fopen("lista_de_productos_1.txt","w");
+									//Comprobamos si hay error al abrir el fichero
+									if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+									
+									
+									for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+								    	if(j==h){
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades-unidades[i]);
+										}
+									
+										else{
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades);
+										}
+									}	
+
+									
+									
+									fclose(pf);
+							
+						}  
+					}
+					
+					else{
+						printf("\tCodigo no valido\n\n");
+					}
+					
+					i++;
+				
+			        break;
+			    }
+			    case 'C':
+				case 'c'://en esta opción damos la orden de pasar la información al carrito FALTA DESARROLLAR ESTA PARTE MAÑANA CONTINUO
+				{
+					b=1;//bandera cambia Y se deja de ejecutar el bucle
+					//mostrarcarrito(CODIGOS,20,unidades,20,i);//i es el número de productos que se añade a la lista
+					mostrar_carrito(CODIGOS,20,unidades,20,i);//i es el número de productos que se añade a la lista
+				    break;	
+			    }
+				default:
+				{	
+					//system("cls");
+			    	printf("Caracter introducido no valido");
+					b=0;
+					break;
+			    }
+			    }//llave del switch  
+			    }while(b==0);//se jecuta mientra la bandera no cambia de valor. mientra la expresión es verdadera
+			     g=1;//ya hemos ababado exitosamente la opreacion de añadir productos a carrito
+			     break;
+	    }
+	    default:
+	    {
+	    	system("cls");
+			printf("Caracter introducido no valido");
+			g=0;
+			break;
+	    }
+	  }//Llave del switch
 	  }while(g==0);
 }
 
