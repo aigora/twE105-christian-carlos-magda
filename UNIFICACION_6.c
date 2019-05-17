@@ -403,11 +403,12 @@ void comprando()
 	CODE CODIGOS[20];//vector de estructuras que guarda los códigos de los productos que el usuario desea añadir a su carrito
 	producto productos[N];
 	int unidades[20];//vector que guarda las de los productos que el usuario desea añadir a su carrito
-	int i=0,b=0,g=0,t=0,j=0,h=0;//b=bandera para saber si segimos o no ejecutando el bucle do while
+	int i=0,b=0,g=0,t=0,j=0,h=0,w=0;//b=bandera para saber si segimos o no ejecutando el bucle do while
 	int flag=1000;//AUXIALIAR PARA COMPROBAR EL CÓDIGO ELEGIDO PARA LA COMPRA
 	char fallo;//auxiliar para cuando no hay suficientes items en stock
 	
 	leer_catalogo(productos,N);
+
 	 do{
 	printf("Indroduzca la letra (A) si desea anadir algo a su carrito\n");
 	scanf(" %c",&eleccion);
@@ -440,20 +441,72 @@ void comprando()
 							scanf(" %c",&fallo);
 							switch(fallo){
 								case'c':
+								{
+					
 									//compra el numero indicado
+									
+									FILE *pf;
+									//Abrimos un fichero, en el qeu sobreescribimos los datos almacenados en el vector de estructuras, de manera que se altere el numero de unidades
+									pf=fopen("lista_de_productos_1.txt","w");
+									//Comprobamos si hay error al abrir el fichero
+									if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+									
+									
+									for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+								    	if(j==h){
+											fprintf(pf,"%f;%i\n",productos[j].precio,0);//0 porque ha accedido a comprar todas las unidades posibles
+										}
+									
+										else{
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades);
+										}
+									}	
+
+								
+									fclose(pf);
+									
 									t=1;
 									break;
-								case'h':
+									}
+								case'h':{
 									b=1;
 									t=1;
 									break;
-								default:
+								}
+									
+								default:{
 									printf("Opcion no valida, intentelo de nuevo.\n");
 									t=0;
 									break;
+								}
+									
 							}	
 						} while(t==0);
 					}   
+					
+					else{
+						//compra el numero indicado
+									FILE *pf;
+									//Abrimos un fichero, en el qeu sobreescribimos los datos almacenados en el vector de estructuras, de manera que se altere el numero de unidades
+									pf=fopen("lista_de_productos_1.txt","w");
+									//Comprobamos si hay error al abrir el fichero
+									if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+									
+									
+									for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+								    	if(j==h){
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades-unidades[i]);
+										}
+									
+										else{
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades);
+										}
+									}	
+
+									
+									
+									fclose(pf);
+					}
 				}
 				
 				else{
@@ -498,20 +551,73 @@ void comprando()
 								scanf(" %c",&fallo);
 								switch(fallo){
 									case'c':
+									{
+							
 										//compra el numero indicado
+										
+										FILE *pf;
+										//Abrimos un fichero, en el qeu sobreescribimos los datos almacenados en el vector de estructuras, de manera que se altere el numero de unidades
+										pf=fopen("lista_de_productos_1.txt","w");
+										//Comprobamos si hay error al abrir el fichero
+										if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+										
+										
+										for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+									    	if(j==h){
+												fprintf(pf,"%f;%i\n",productos[j].precio,0);//0 porque accepta comprar todo el stock
+											}
+										
+											else{
+												fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades);
+											}
+										}	
+	
+										fclose(pf);
+										
 										t=1;
 										break;
-									case'h':
+										}
+									case'h':{
 										b=1;
 										t=1;
 										break;
-									default:
+									}
+										
+									default:{
 										printf("Opcion no valida, intentelo de nuevo.\n");
 										t=0;
 										break;
+									}
+										
 								}	
 							} while(t==0);
-						}   
+						}
+						
+						else{
+							//compra el numero indicado
+							
+									FILE *pf;
+									//Abrimos un fichero, en el qeu sobreescribimos los datos almacenados en el vector de estructuras, de manera que se altere el numero de unidades
+									pf=fopen("lista_de_productos_1.txt","w");
+									//Comprobamos si hay error al abrir el fichero
+									if(pf==NULL) printf("Error al abrir el fichero lista_de_productos_1.");
+									
+									
+									for(j=0;j<N;j++){//COMPROBAMOS SI EL CODIGO INTRODUCIDO COINCIDE CON ALGUNO DE LSO CODIGOS DE LOS ITEMS
+								    	if(j==h){
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades-unidades[i]);
+										}
+									
+										else{
+											fprintf(pf,"%f;%i\n",productos[j].precio,productos[j].unidades);
+										}
+									}	
+
+									
+									
+									fclose(pf);
+							
+						}  
 					}
 					
 					else{
@@ -537,7 +643,7 @@ void comprando()
 					break;
 			    }
 			    }//llave del switch  
-			    }while(b==0);//se ejecuta mientras la bandera no cambia de valor. mientras la expresión es verdadera
+			    }while(b==0);//se jecuta mientra la bandera no cambia de valor. mientra la expresión es verdadera
 			     g=1;//ya hemos ababado exitosamente la opreacion de añadir productos a carrito
 			     break;
 	    }
