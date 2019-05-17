@@ -156,7 +156,7 @@ void main()
 								system("cls");
 								catalogo_completo(flag);
 								system("pause");
-								//comprando();
+							
 								break;	
 							}
 							case 'p':
