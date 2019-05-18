@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h> /* system */
 #include <string.h> /*strcmp*/
+#include <time.h>
 #define N 4 //N número de productos en venta
 #define M 2 //M número de tipo de productos
 
@@ -288,9 +289,23 @@ void main()
 //Función de registro
  
 void registro(){
+	//Necesario para tomar la fecha actual (librería time.h).
+	time_t t = time(NULL);
+	//Estructura fecha/ hora actual.
+	struct tm tm = *localtime(&t);
+	
+	//Variables que almacena el dia de hoy.
+	int day=tm.tm_mday;
+	int month=tm.tm_mon+1; //Enero es el mes 0, por lo que sumamos 1.
+	int year=tm.tm_year+1900; //Hemos de sumar 1900 porque los años se cuentan desde 1900.
+	
+	//Variable que almacena la diferencia entre los datos de la fecha actual y la del nacimiento del usuario.
+	int diff_year;
+	int diff_month;
+	int diff_day;
+	
 	//indice de iteración.
 	int i=0;
-	
 	//Auxiliar para comprobar si los datos son correctos.
 	int flag;
 	//Iteracion 
@@ -350,13 +365,36 @@ void registro(){
 	scanf(" %s[16]",persona1.password);
 		
 	//Fecha de cumpleaños
-	printf("\n\tEscriba la fecha con el formato: (2/3/1987) separando los n%cmeros con espacios\n",163);
+	printf("\n\tEscriba la fecha con el formato: (dd/mm/yyyy).\n",163);
 	printf("\n\tFecha de nacimiento : ");
-	scanf(" %i %i %i",
+	scanf(" %i/%i/%i",
 			&nacimiento.day,&nacimiento.month,&nacimiento.year);
 	
+	//Utilizaremos i como flag para comprobar si el usuario es mayor de edad.
+	i=0;
+	
+	diff_year = year - nacimiento.year;
+	diff_month = month - nacimiento.month;
+	diff_day = day - nacimiento.day;
+	
+	//Calcula si el usuario es mayor de edad.
+	if(diff_year>=19) i=1;
+	else if(diff_year==18){
+		
+			if (diff_month>0) i=1;
+			else if(diff_month==0){
+					
+					if (diff_day>0) i=1;
+					else if(diff_day==0) {
+						i=1;
+						printf("\n \t Oh, hoy es tu cumplea%cos. Felicidades!!",164);
+					}
+				}
+		
+		}
+				
 	//Comprobación de mayoría de edad
-	if (nacimiento.year>2000) {	
+	if (i==0) {	
 	printf("\n\nLo sentimos, los menores de 18 a%cos no pueden poseer una cuenta.\n",164);
 	
 	fclose (pf);
