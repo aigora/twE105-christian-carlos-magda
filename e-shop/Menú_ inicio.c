@@ -347,7 +347,6 @@ void registro(){
 	
 	while(fscanf(pf,"%[^;];%[^;];%[^;];%[^\n]\n",registrados[n].nombre,registrados[n].apellidos,registrados[n].nickname,registrados[n].password)!=EOF&&flag!=0)
 	{
-		//printf("%s\n", registrados[n].nickname);
 		flag=strcmp(registrados[n].nickname,persona1.nickname);
 		n++;
 	}
