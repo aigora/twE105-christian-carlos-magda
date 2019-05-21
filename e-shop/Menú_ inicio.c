@@ -57,6 +57,13 @@ typedef struct
     char fecha[15];
 }historial;
 
+typedef struct 
+{
+	char usuario[16];
+    char n_prod[4];
+    char fecha[15];
+}lista_prov;
+
 //FunciÛn de registro.
 void registro();
 
@@ -72,10 +79,11 @@ void filtro_precio(int flag);//funciÛn que filtra en base a un intervalo de prec
 void leer_catalogo(producto productos[],int dimension);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
 void leer_clase(clasificacion clasificaciones[],int dimension1);//funcion que lee los ficheros y guarda los datos en un vector de estructuras
 void mostrar_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i);
-void opciones_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i);
-void leer_historial(historial compras[],int d1,CODE CODIGO[],int d2,int unidades[],int d3,int *p);
+void opciones_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i,char nick_usuario[],int dimension3);
+void leer_historial(historial compras[],int d1,CODE CODIGOS[],int d2,int unidades[],int d3,int *p);
 void historial_completo(char nick_usuario[],int dim);
 void historial_fechas(char nick_usuario[],int dim);
+void ver_lista_provisional(char nick_usuario[],int dim);
 
 void main()
 {
@@ -209,7 +217,7 @@ void main()
 						//system("pause");
 						if(flag==1)
 						{
-						    printf("Opciones:\n \tVer historial completo (H)\n \tVer historial por fechas (F)\n");
+						    printf("Opciones:\n \tVer historial completo (H)\n \tVer historial por fechas (F)\n \tVer lista porvisional de compras (P) Solo elegir esta opcion si ya habeis guardado anteriormente una lista\n");
 						    scanf(" %c",&election);
 						    switch (election)
 					     	{
@@ -225,6 +233,12 @@ void main()
 								system("cls");
 								printf("Historial de compras\n");
 								historial_fechas(nick_usuario,16);
+								system("pause");
+								break;
+							case 'P':
+							case 'p':
+								system("cls");
+								ver_lista_provisional(nick_usuario,16);
 								system("pause");
 								break;
 							default://CARACTER NO V√ÅLIDO
@@ -285,9 +299,7 @@ void main()
 	system ("color E0");//cambia el color del fondo(F) y del texto(0).
 	printf("\n\t%cHASTA LA PR%cXIMA!",173,224);
 }
-
 //FunciÛn de registro
- 
 void registro(){
 	//Necesario para tomar la fecha actual (librerÌa time.h).
 	time_t t = time(NULL);
@@ -416,9 +428,7 @@ void registro(){
 	fclose (pf);
 	}
 }
-
 //funciÛn login
-
 void login (char *p,int *q)//CON PUNTEROS MODIFICAMOS EL CONTENIDO DE NICK_USUARIO Y FLAG
 {
 	//Indice de iteraciÛn
@@ -495,7 +505,6 @@ void login (char *p,int *q)//CON PUNTEROS MODIFICAMOS EL CONTENIDO DE NICK_USUAR
 	fclose(pf4);//cerramos la lista provisional
 	
 } 
-
 void catalogo_completo(int flag)
 {
 	int i,m,k,a,j;
@@ -526,7 +535,6 @@ if(flag==1)
 else
    printf("Para realizar compras debe iniciar sesion\n");
 }
-
 void categorias(int flag)
 {	
 int p=0,i;//p es una bandera que nos sirve para saber si el usuario a introducido un caracter v·lido o no y de esta forma saber si se lo tenemos que volver a pedir 
@@ -536,52 +544,62 @@ system("cls");
 
 printf("\n\tCATEGOR%cAS\n",214);
 printf("\n Elige la categor%ca:\n",161);
-printf("\tCondensadores(C)\n\tPilas(P)\n\tConmutadores(S)\n\tResistencia(R)\n\tSalir(S)\n ");
+printf("\tAmperimetros(A)\n \tBobinas(B)\n \tCondensadores(C)\n \tPilas(P)\n \tResistencias(R)\n \tConmutadores(S)\n \tTransitores(T)\n ");
 //Apartir de esta parte no se ve. entonces aqui esta el problema. No atras, solo mira a partir de aqui
 do{
 scanf("%c",&eleccion);
 //system("pause");
 switch (eleccion)
 {
+case 'A':
+case'a':
+	p=1;//bandera cambia
+	evalua(flag,0);
+    break;
+    
+case 'B':
+case 'b':
+	p=1;
+    evalua(flag,1);
+    break;
+
 case 'C':
 case'c':
-	evalua(flag,0);
+	p=1;//bandera cambia
+	evalua(flag,2);
     break;
     
 case 'P':
 case 'p':
-    evalua(flag,1);
-    break;
-    
-/*case 'S':
-case's':
-	
-	j=2;
-	evalua(productos,N,clasificaciones,M,j);
-    break;
-    
-case 'R':
-case'r':
-	
-	j=3;
-	evalua(productos,N,clasificaciones,M,j);
-    break;
-    
-default:
-	
 	p=1;
-	printf("Caracter no valido. Vuelva a intentarlo\n");
-    break;*/
+    evalua(flag,3);
+    break;
+
+case 'R':
+case 'r':
+	p=1;
+    evalua(flag,4);
+    break;
+
+case 'S':
+case's':
+	p=1;//bandera cambia
+	evalua(flag,5);
+    break;
     
+case 'T':
+case 't':
+	p=1;
+    evalua(flag,6);
+    break; 
+     
 }
-}while(p=1);
-}
-	
+}while(p!=1);
+}	
 void evalua(int flag,int j)//funciÛn que te muestra las categorÌas,int j);//funciÛn que compara si la "eleccion" concide con el tipo y manda imprimir productos del mismo tipo
 {
 	
-  int m=0;
-  int p=0;
+  int m=0,p=0;
   
   producto productos[N];
   clasificacion clasificaciones[M];
@@ -594,10 +612,8 @@ void evalua(int flag,int j)//funciÛn que te muestra las categorÌas,int j);//func
   printf("%s\n", clasificaciones[j].TIPO);//imprime el tipo de producto Ejemplo imprime la palabra Condensador almacenada en el vector de estructuras "clasificciones"
   for(p=0;p<N;p++)
   {
-  m=strcmp(productos[p].tipo,clasificaciones[j].letra);//de la libreria string,compara. letra[j]=letra del producto//AquI debe de estar el error poeque antes el compilador me dijo que clasificaciones[j].NTIPO era un puntero
-  //entonces lo que estarÌ haciendo aquÌes comparar punteros
-  printf("%i\n",m);//nunca me imprime ningun producto porque estoy comparando dos punteros que siempre son distindos
-  //printf("%c %c",m1,m2);
+  m=strcmp(productos[p].tipo,clasificaciones[j].letra);//de la libreria string,compara. letra[j]=letra del producto
+ 
   if (m==0)//si son iguales imprimo toda la informaciÛn del producto//doble igual de pregunta, no de asignaciÛn
   {
     printf("%s\n\tEspecificaciones:\n\t\t%s\n\t\t%s\n\t\t%s\n\tCodigo: %s\n",
@@ -617,9 +633,6 @@ void evalua(int flag,int j)//funciÛn que te muestra las categorÌas,int j);//func
    printf("Para realizar compras debe iniciar sesion\n");
 
 }
-
-//Filtro de ofertas
-//PARTE 5
 void ofertas(int flag)//(/*producto productos[],int dimension*/)//Las ofertas son fijas de cada objeto, no se actualizan cada vez que se abre el programa
 {
 	char letra1[10]="oferta";
@@ -628,14 +641,11 @@ void ofertas(int flag)//(/*producto productos[],int dimension*/)//Las ofertas so
 
 	leer_catalogo(productos,N);//Leemos los productos y guardamos los datos en un vectores de estructuras
 
-	//system("cls");
-	//printf("\n\tOFERTAS\n");
-
 	for(p=0;p<N;p++)
 	  {
-	  	//printf("%s",productos[0].estado);
+	  
 	  	m=strcmp(productos[p].estado,letra1);
-	  	printf("%i\n",m);
+	
 	  if (m==0)//si son iguales imprimo toda la informaciÛn del producto//doble igual de pregunta, no de asignaciÛn
 	  {
 	    printf("%s\n\tEspecificaciones:\n\t\t%s\n\t\t%s\n\t\t%s\n\tCodigo: %s\n",
@@ -655,10 +665,6 @@ void ofertas(int flag)//(/*producto productos[],int dimension*/)//Las ofertas so
    printf("Para realizar compras debe iniciar sesion\n");
 
 }
-
-//SOLO FALTA AGREGAR LA PARTE DE COMPRANDO. RECUERDA QUE ESA PARTE SE TIENE QUE MOSTRAR SOLO SI EL USUARIO A INICIADO SESI”N
-//FALTA AGREGAR LA PARTE DE CARRITO. TIENES QUE DESARROLLAR ESA PARTE POR SEPARADO Y LUEGO AGRAGARLA  A ESTE C”DIGO FINAL
-
 void comprando()
 {
 	char eleccion;
@@ -923,15 +929,24 @@ void comprando()
 	  }//Llave del switch
 	  }while(g==0);
 }
-
 void mostrar_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i)//i te da el n˙mero de productos que ha comprado el usuario
 {
+	//Estas dos lÌneas de cÛdigo son necesaria para poder imprimir la fecha
+	time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
 	int m0,m1,g;
-	int m,j=0,k=0;
+	int m,j=0,k=0,n;
+	float s=0;
+	char nick_usuario[16];
 	producto productos[N];
 	FILE *pf4;//puntero que seÒala a fichero 
-    pf4 = fopen("lista_provisional.txt", "w");//en modo write para modificarlo tantas veces como el usuario lo desee
+	pf4 = fopen("lista_provisional.txt", "r");
+	//Leo el nick_usario del fichero
+	n = fscanf(pf4,"%s",nick_usuario);
+	//cierro el fichero
+	fclose(pf4);
 	leer_catalogo(productos,N);
+	
 if (i!=0)
 {
 printf("\tProductos\t\t\t\t\tUnidades\t\t\t\t\tPrecio\n\n");//imprimimos los productos en pantalla seg˙n los cÛdigos
@@ -948,29 +963,48 @@ do
 printf("%i.%s\t\t\t\t\t",k+1,productos[g].nombre); //como estoy imprimiendo cadenas de caracteres de distinto tamaÒo por eso no se imprime todo en una misma fila
 printf("%i\t\t\t\t\t",unidades[j]);
 printf("%f\n",productos[g].precio*unidades[j]);//solucion 1 de poner espacios no funciona. ahora probar solucion 2 de poner la infor en distintos printf este problema es solo porque en una linea pones distiontos tipos de caracterres que quieres imprimir
-fprintf(pf4, "%s;", CODIGOS[j].CODIGOCOMPRA);
-fprintf(pf4, "%i\n", unidades[j]);
+s+=productos[g].precio*unidades[j];
 j++;//Pasamos al siguiente codigo porque solo hay un codigo parar cada producto
 k++;//k es el contador del n˙mero de productos que se ha impreso y el bucle acaba cuando ya hemos imprimido los i productos
 }while(k!=i);//El bucle tiene que acabar cuando el vector de unidades se ha recorrido totalmente, porque eso significa que ya hemos impreso toda la lista 
+printf("\n\t\t\t\t\t\t\t\t\t\t\tPrecio total %f\n",s);
 }
-opciones_carrito(CODIGOS,20,unidades,20,i);
-}
-    
-void opciones_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i)
+
+opciones_carrito(CODIGOS,20,unidades,20,i,nick_usuario,16);
+}   
+void opciones_carrito(CODE CODIGOS[],int dimension1,int unidades[],int dimension2,int i,char nick_usuario[],int dimension3)
 {
+	//Estas dos lÌneas de cÛdigo son necesaria para poder imprimir la fecha
+	time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    int g=0,m,n,T=0,j,flag1=0;
+	char val[4];
+	float val1;
+	historial compras[100];
+	CODE CODIGOS1[100];
+	int unidades1[100];
+	leer_historial(compras,100,CODIGOS1,100,unidades1,100,&j);//modifico el contenido de j a traves de un puntero
 FILE *pf5;
 pf5 = fopen("numero_tarjeta.txt", "a");//Abrimos el fichero para poder escribir en Èl
+FILE *pf9;//puntero que seÒala a fichero 
+pf9 = fopen("historial_compras.txt", "a");//Abrimos el fichero para escribir sobre Èl
+FILE *pf10;//puntero que seÒala a fichero 
+pf10 = fopen("lista_provisional1.txt", "a");
 char eleccion;
-long long int tarjeta;
+long int tarjeta;
 long int pin;
-int numprod,j,h;
-printf("\n\nIntroduce la letra correspondiente para\nModificar la compra\n\tCambiar unidades(C)\n\tQuitar productos(Q)\nAnular la compra(S)\nPagar(P)\nVolver a Menu Principal(M)\n");
+int numprod,p,h;
+
+printf("\n\nIntroduce la letra correspondiente para\n \tModificar la compra\n \tCambiar unidades(C)\n \tQuitar productos(Q)\n \tAnular la compra(S)\n \tPagar(P)\n \tGuardar Lista provisional (G)\n \tPara volver al Menu Principal debe Guardar o Anular la lista\n");
+do
+{
 scanf(" %c",&eleccion);
 switch (eleccion)
 {
 case 'C':
 case 'c':
+	{
+		flag1=1;
 	    printf("Seleccione el producto 1  2  3 ...\n");
 	    scanf("%i",&numprod);//n˙mero de producto
 	    printf("Introduzca las unidades que desee\n");
@@ -978,8 +1012,11 @@ case 'c':
 	    system("cls");//limpia la pantalla
 	    mostrar_carrito(CODIGOS,20,unidades,20,i);//Damos la orden para que se imrpima la lista
 	    break;
+    }
 case 'Q':
 case 'q':
+	{
+		flag1=1;
         printf("Seleccione el producto 1. 2. 3. ...\n");
 	    scanf("%i",&numprod);//n˙mero de producto
 	    for(h=0;h<i-numprod;h++)
@@ -998,40 +1035,89 @@ case 'q':
 		//printf("Carrito vacio\n");
 		mostrar_carrito(CODIGOS,20,unidades,20,i);//Damos la orden para que se imrpima la lista
 		break;
+	}
 case 'S':
 case 's':
-	    for(j=0;j<i;j++)
-	    /*{
-        strcpy(CODIGOS[j].CODIGOCOMPRA,"0");
-		unidades[j]=0;
-	    }*/ //En realidad aquÌ solo debo limpiar la ventana y ya
+	{
+		flag1=1;
 	    system("cls");//limpia la pantalla
 		printf("Carrito vacio\n");
 	    break;
 	    //Doy la orden de que se limpie la venta para que no aparesca ning˙n producto
+	}
 case 'P':
 case 'p':	
+{
+	    system("cls");//limpia la pantalla
+	    flag1=1;
+	    fprintf(pf5,"%s;",nick_usuario);//imprimo el nick del usuario
         printf("Numero de tarjeta:");
-        scanf("%lli",&tarjeta);
-        fprintf(pf5, "%lli;", tarjeta);//Escribimos en el fichero
+        scanf("%ld",&tarjeta);
+        fprintf(pf5, "%ld;", tarjeta);//Escribimos en el fichero
         printf("\nPIN:");
-        scanf("%li",&pin);
-        fprintf(pf5, "%li\n", pin);//Escribimos el pin en la misma lÌnea separado por ;
+        scanf("%ld",&pin);
+        fprintf(pf5, "%ld\n", pin);//Escribimos el pin en la misma lÌnea separado por ;*/
         //ReciÈn cuando se paga la compra, la informaciÛn se imprime en el hisotrial
         //En el formato en el que he escrito el historial
-        break;
-/*case 'M':
-case 'm':*/
+
+//PARA SABER QUE N⁄MERO DE COMPRA ES
+do
+ {
+ m=strcmp(nick_usuario,compras[T].usuario);//bucamos los productos del usuario
+ if(m==0)//si coinciden imprimimos los productos
+ {
+ strcpy(val,compras[T].n_compra);//si la compra es del usuario asigno el n˙mero de compra a val
+ T++;//pasamos a la lÌnea siguiente
+}
+ else 
+ T++;//si la lÌnea no es del usuario, paso a la siguiente
+}while(T!=j);//el bucle termina cuando hayamos recorrido todo el fichero
+
+*val+=1;//este es el n˙mero de compra que realizaremos ahora
+//printf("%s\n",val);
+//como el i me da el n˙mero de productos que he comprado,recorro los vectores conla compra i veces
+for(T=0;T<i;T++)
+{
+fprintf(pf9,"%s;",nick_usuario);//imprimo el nick del usuario
+fprintf(pf9,"%s;",val);//Imprimo n˙mero de compra es
+fprintf(pf9,"%i;",i);//y te da el n˙mero de productos de la compra
+fprintf(pf9,"%d/%d/%d;", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);//imprimo la fecha
+fprintf(pf9,"%s;",CODIGOS[T].CODIGOCOMPRA);//imprimo el cÛdigo del producto
+fprintf(pf9,"%i\n",unidades[T]);//imprimo las unidades
+}
+printf("Compra realizada satisfactoriamente\n");
+break;
+}
+case 'G':
+case 'g'://imprimimos en el fichero lista_provisional la lista
+	{
+	flag1=1;
+	 for(T=0;T<i;T++)//i es el n˙mero de productos
+	 {
+	 fprintf(pf10,"%s;",nick_usuario);//imprimo el nick del usuario
+     fprintf(pf10,"%i;",i);//y te da el n˙mero de productos de la compra
+     fprintf(pf10,"%d/%d/%d;", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);//imprimo la fecha
+     fprintf(pf10, "%s;", CODIGOS[T].CODIGOCOMPRA);
+     fprintf(pf10, "%i\n", unidades[T]);
+     }
+     printf("Recuerde que solo puede guardar una lista provisional\nSi desea guardar una nueva lista debera ir a su Historial y anular la lista provisional anterior\n");
+     break;
+    }
+	
 default:
-	    printf("Opcion no valida\n");
+	{
+	    
+	    printf("Opcion no valida. Vuelva a intentarlo\n");
 	    break;
+	}
 }
+}while(flag1!=1);//sirve para que si el usuario presiona un caracter no v·lido como opciÛn, el programa todavÌa continue
 fclose(pf5);//cerramos el fichero aquÌ porque que si el usuario no quisiese alterar su lista y no optar· por seleccionar alguna opciÛn y defrente cerrase el programa, el fichero no quedarÌa sin cerrar
-}
-
-
-    
-void filtro_precio(int flag){//FunciÛn que filtra el cat·logo de manera que solo muestre los objetos que pertenezcan a un intervalo de precios a elegir por el usuario.
+fclose(pf9);//Cerramos el fichero historial
+fclose(pf10);
+}   
+void filtro_precio(int flag)
+{//FunciÛn que filtra el cat·logo de manera que solo muestre los objetos que pertenezcan a un intervalo de precios a elegir por el usuario.
 	float a, b;//LÌmites de precios a filtrar
 	int i, flag1=0;//auxiliares
 	producto productos[N];
@@ -1081,8 +1167,8 @@ if(flag==1)
 else
    printf("Para realizar compras debe iniciar sesion\n");
 }
-
-void leer_catalogo(producto productos[],int dimension){
+void leer_catalogo(producto productos[],int dimension)
+{
 	
 	int i=0;
 	int n, h;//auxiliar para lectura de ficheros
@@ -1121,11 +1207,9 @@ void leer_catalogo(producto productos[],int dimension){
   		
   		fclose(pf); // Cerramos fichero
 		fclose(df); // Cerramos fichero
-}
-			
-
-
-void leer_clase(clasificacion clasificaciones[],int dimension1){
+}			
+void leer_clase(clasificacion clasificaciones[],int dimension1)
+{
 	int i=0;
 	int n;//auxiliar para lectura de ficheros
 	
@@ -1148,27 +1232,28 @@ void leer_clase(clasificacion clasificaciones[],int dimension1){
   		
 		fclose(tf); // Cerramos fichero	
 }
-
 //lee historial
-void leer_historial(historial compras[],int d1,CODE CODIGO[],int d2,int unidades[],int d3,int *p)//Le paso el nickname desde login 
+void leer_historial(historial compras[],int d1,CODE CODIGOS[],int d2,int unidades[],int d3,int *p)//Le paso el nickname desde login 
 {
-int i,m,J=0;
+int i,m=10,J=0;//A m le damos cualquier valor distinto de cero para asegurarnos de entrar en el bucle
 
 FILE *pf9;//puntero que seÒala a fichero 
 pf9 = fopen("historial_compras.txt", "r");//Abrimos el fichero
 
-for(i=0;i<2;i++)
+//for(i=0;i<9;i++)
+while(m!=EOF)//Recorremos todo el fichero
 {
-m=fscanf(pf9,"%[^;];%[^;];%[^;];%[^;];%[^;];%i\n",compras[i].usuario,compras[i].n_compra,compras[i].n_prod,compras[i].fecha,CODIGO[i].CODIGOCOMPRA,&unidades[i]);//Leemos y guardamos la informaciÛn
-J++;//contador de lÌneas
+m=fscanf(pf9,"%[^;];%[^;];%[^;];%[^;];%[^;];%i\n",compras[i].usuario,compras[i].n_compra,compras[i].n_prod,compras[i].fecha,CODIGOS[i].CODIGOCOMPRA,&unidades[i]);//Leemos y guardamos la informaciÛn
+J++;//contador de lÌneas del fichero
+i++;
 }
 *p=J;
 //printf("%i",unidades[1]);//compruebo que la lectura se ha hecho bien
 fclose(pf9); // Cerramos fichero
 }
-
 void historial_completo(char nick_usuario[],int dim)
 {
+	//DeclaraciÛn de variables y tipos de variables a utilizar
 	int g=-1,m,n,i=0,k=1,j;
 	float val;
 	historial compras[100];
@@ -1177,7 +1262,7 @@ void historial_completo(char nick_usuario[],int dim)
 	leer_historial(compras,100,CODIGOS,100,unidades,100,&j);//modifico el contenido de j a traves de un puntero
 	producto productos[N];
     leer_catalogo(productos,N);//Leemos el catalogo y guardamos los datos en un vectores de estructuras //DOy la direccion de memoria y me llena los vectores
- //Necesito algo que me indique cuantas compras se han hecho para saber cuantas veces tiene que aumentar t
+ 
  do
  {
  m=strcmp(nick_usuario,compras[i].usuario);//bucamos los productos del usuario
@@ -1186,10 +1271,14 @@ void historial_completo(char nick_usuario[],int dim)
  printf("COMPRA %s",compras[i].n_compra);
  printf("\t\t\t\t\tFECHA: %s\n",compras[i].fecha);
  printf("\tProductos\t\t\t\t\tUnidades\t\t\t\t\tPrecio\n\n");//imprimimos los productos en pantalla seg˙n los cÛdigos
- val=atof(compras[i].n_prod);//atof es una funciÛn que transforma una cadena de caracteres en un float
- //printf("%f\n",val);//esta lÌnea solo me sirve para comprobar que se ha hecho la asignaciÛn
- for(n=0;n<val;n++)//imprimo todos los productos de la misma compra ya que tengo la informacion de cuantos productos tiene cada compra. n_prod es una cadena de caracteres
+ val=atof(compras[i].n_prod);//atof es una funciÛn que transforma una cadena de caracteres en un float. Transformo
+ //el n˙mero de productos de cada compra a realya que inicialmente lo guarde como cadena de caracteres. Lo guardamos como cadena de caracteres para podre almacenar
+ // esta informaciÛn en un vector de estructuras del tipo historial(Lo puede ver en el fichero que guarda las estructuras) directamente utilizando un solo
+ // fscanf(al leer el fichero historial_compras), ya que scanf no nos permitÌa leer cadenas de caracteres y n˙meros mezclados para cada lÌnea del fichero
+ 
+ for(n=0;n<val;n++)//imprimo todos los productos de la misma compra ya que tengo la informacion de cuantos productos tiene cada compra. 
  {  
+    g=-1; //volvemos a comparar todos los productos
 	do 
 	{   
 	    g++;//avanzamos al siguiente producto y lo imprimimos
@@ -1209,15 +1298,16 @@ i++;//si est· lÌnea no es la del usuario entonces paso a la siguiente
 }while(i!=j);//imagina que tienes j=5 lÌneas entonces i recorrerÌa las posiciones 0 1 2 3 4 (5 posiciones del vector, que se corresponden con 5 lÌneas), y cuando i=5 la expresiÛn es falsa y 
 //el bucle ya no se ejecuta, con lo cual, he conseguido recorrer las 5 lÌneas
 }
-
 void historial_fechas(char nick_usuario[],int dim)
 {
+	//DeclaraciÛn de varianles y tipos de variables a utilizar
 	int i=0,k=1,g=-1,n,m,t=0,j;
 	float val;
 	char FECHA[15];
 	historial compras[100];
 	CODE CODIGOS[100];
 	int unidades[100];
+	
 	leer_historial(compras,100,CODIGOS,100,unidades,100,&j);//modifico el contenido de j a traves de un puntero
 	producto productos[N];
     leer_catalogo(productos,N);//Leemos el catalogo y guardamos los datos en un vectores de estructuras //DOy la direccion de memoria y me llena los vectores
@@ -1225,37 +1315,38 @@ void historial_fechas(char nick_usuario[],int dim)
 	printf("\n\tEscriba la fecha con el formato: 2/3/2019\n",163);
 	scanf("%s",FECHA);
 	
- do
- {
-   m=strcmp(nick_usuario,compras[i].usuario);//bucamos los productos del usuario
-   if(m==0)//si coinciden
- {
- 	if(strcmp(FECHA,compras[i].fecha)==0)//comparamos la fecha con la fecha que quiero, si coincide, se imprimira toda la compra de esa fecha
- 	{
-    printf("COMPRA %s",compras[i].n_compra);
-    printf("\t\t\t\t\tFECHA: %s\n",compras[i].fecha);
-    printf("\tProductos\t\t\t\t\tUnidades\t\t\t\t\tPrecio\n\n");//imprimimos los productos en pantalla seg˙n los cÛdigos
-    val=atof(compras[i].n_prod);//atof es una funciÛn que transforma una cadena de caracteres en un float
-    //printf("%f\n",val);//esta lÌnea solo me sirve para comprobar que se ha hecho la asignaciÛn
-    for(n=0;n<val;n++)//imprimo todos los productos de la misma compra ya que tengo la informacion de cuantos productos tiene cada compra. n_prod es una cadena de caracteres
-    {  
-	  do 
-	  {   
-	    g++;//avanzamos al siguiente producto y lo imprimimos
-	    m=strcmp(productos[g].codigo,CODIGOS[i].CODIGOCOMPRA);
-	  }while(m!=0);
+   do
+   { 
+       m=strcmp(nick_usuario,compras[i].usuario);//bucamos los productos del usuario
+       if(m==0)//si coinciden
+       {
+ 	        if(strcmp(FECHA,compras[i].fecha)==0)//comparamos la fecha con la fecha que quiero, si coincide, se imprimira toda la compra de esa fecha
+          	{
+                 printf("COMPRA %s",compras[i].n_compra);
+                 printf("\t\t\t\t\tFECHA: %s\n",compras[i].fecha);
+                 printf("\tProductos\t\t\t\t\tUnidades\t\t\t\t\tPrecio\n\n");
+                 val=atof(compras[i].n_prod);//atof es una funciÛn que transforma una cadena de caracteres en un float
+  
+                 for(n=0;n<val;n++)//imprimo todos los productos de la misma compra ya que tengo la informacion de cuantos productos tiene cada compra. n_prod es una cadena de caracteres
+                 {  
+                 g=-1;//Tenemos que volver a recorrer el vector de productos cada vez que el bucle for se ejecute
+	             do 
+	             {   
+	             g++;//avanzamos al siguiente producto 
+	             m=strcmp(productos[g].codigo,CODIGOS[i].CODIGOCOMPRA);//imprimimos los productos en pantalla comparando los cÛdigos del historial con los codigos de todo el cat·logo
+	             }while(m!=0);
 
-    printf("%i.%s\t\t\t\t\t",k,productos[g].nombre); //como estoy imprimiendo cadenas de caracteres de distinto tamaÒo por eso no se imprime todo en una misma fila
-    printf("%i\t\t\t\t\t",unidades[i]);
-    printf("%f\n",productos[g].precio*unidades[i]);//solucion 1 de poner espacios no funciona. ahora probar solucion 2 de poner la infor en distintos printf este problema es solo porque en una linea
-    i++;//paso a la siguiente lÌnea del fichero
-    k++;//te imprime el n˙mero del producto 1. 2. 3. 4.
-    }
-    t++;//bandera que me indica si se realizaron o no compras en la fecha introducida
-    }
-    else
-    i++;//si las fechas no coinciden paso a la lÌnea siguiente del fichero
-}
+                 printf("%i.%s\t\t\t\t\t",k,productos[g].nombre);
+                 printf("%i\t\t\t\t\t",unidades[i]);
+                 printf("%f\n",productos[g].precio*unidades[i]);
+                 i++;//paso a la siguiente lÌnea del fichero
+                 k++;//te imprime el n˙mero del producto 1. 2. 3. 4.
+                }
+                 t++;//bandera que me indica si se realizaron o no compras en la fecha introducida
+            }
+            else
+            i++;//si las fechas no coinciden paso a la lÌnea siguiente del fichero
+       }
    else
    i++;//si las fechas no coinciden entonces paso a la siguiente lÌnea siguiente del fichero
 }while(i!=j);//El bucle se ejecuta hasta leer todo el fichero
@@ -1264,16 +1355,63 @@ if(t==0)//Si despuÈs de leer todo el fichero, no se encontro ninguna compra real
 printf("No se realizaron compras el %s\n",FECHA);
 
 }
+void ver_lista_provisional(char nick_usuario[],int dim)
+{
+	//DeclaraciÛn de variables y tipos de variables a utilizar
+	int i=0,j=0,m=10,p=0,n,t;//asigno a m cualquier valor para asegurame de entrar en el bucle
+    lista_prov lista[100];
+	CODE CODIGOS1[100];
+	int unidades1[100];
+	CODE CODIGOS[100];
+	int unidades[100];
+    FILE *pf10;//puntero que seÒala a fichero 
+    pf10 = fopen("lista_provisional1.txt", "r");//Abrimos el fichero
 
+   while(m!=EOF)//Recorremos todo el fichero hasta el final
+   {
+     m=fscanf(pf10,"%[^;];%[^;];%[^;];%[^;];%i\n",lista[j].usuario,lista[j].n_prod,lista[j].fecha,CODIGOS1[j].CODIGOCOMPRA,&unidades1[j]);//Leemos y guardamos la informaciÛn
+     j++;//avanzamos en el vector en donde guardamos la informaciÛn de cada lÌnea del fichero
+     p++;//contador de lÌneas
+   }
 
+   fclose(pf10); // Cerramos fichero
 
+   for(n=0;n<p;n++)//recorremos todos los elementos de los vectores en donde guardamos la informaciÛn del fichero
+   {
+    m=strcmp(nick_usuario,lista[n].usuario);//bucamos los productos del usuario
+    if(m==0)//si coinciden 
+    {
+ 	   //Asignamos lainformaciÛn a  nuevos vectores que luego pasaremos como argumentos de entrada a la funciÛn mostrar_carrrito
+ 	   t=n;
+ 	   strcpy(CODIGOS[i].CODIGOCOMPRA,CODIGOS1[n].CODIGOCOMPRA);//.La asignaciÛn es de derecha a izquierda
+ 	   unidades[i]=unidades1[n];
+       i++;//i tiene el n˙mero de productos de la lista
+    }
+   }
+   
+   n=t-i+1;//Este es el elemento en el que comienza la lista provisional del usuario
 
+   //una vez ya leÌda, la lista deja de ser provisional y toda la informaciÛn de la lista debe desaparecer del fichero, para dar espacio a otra futura lista provisional del usuario
+   //desplazamos la informaciÛn que iba despues de est· lista i lÌneas m·s abajo
+    for(j=0;j<=p-n+i;j++)
+    {
+    	strcpy(lista[n+j].usuario,lista[n+i+j].usuario);//A la posiciona n va el producto que estaba en la posiciÛn n+i
+    	strcpy(lista[n+j].n_prod,lista[n+i+j].n_prod);
+    	strcpy(lista[n+j].fecha,lista[n+i+j].fecha);
+    	strcpy(CODIGOS1[n+j].CODIGOCOMPRA,CODIGOS1[n+i+j].CODIGOCOMPRA);
+    	unidades1[n+j]=unidades1[n+i+j];
+    }
 
+    //Imprimo la informacion de las listas provisionales (de todos los usuarios)en el fichero. Ya habiendo quitado la informaciÛn de la lista del usuario 
+    for(j=0;j<i;j++)
+    {
+    fprintf(pf10,"%s;",nick_usuario);//imprimo el nick del usuario
+    fprintf(pf10,"%s;",lista[j].n_prod);//Imprimo n˙mero de compra es
+    fprintf(pf10,"%i;",lista[j].fecha);//y te da el n˙mero de productos de la compra
+    fprintf(pf10,"%s;",CODIGOS1[j].CODIGOCOMPRA);//imprimo el cÛdigo del producto
+    fprintf(pf10,"%i\n",unidades[j]);//imprimo las unidades
+    }
 
-
-
-
-
-
-
-
+  //LLamo a la funciÛn
+  mostrar_carrito(CODIGOS,100,unidades,100,i);//i es el n˙mero de productos de la lista
+}
