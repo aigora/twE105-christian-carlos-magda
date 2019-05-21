@@ -1,2 +1,0 @@
-C;Condensador;2
-P;Pilas;2

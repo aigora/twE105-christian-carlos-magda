@@ -1,2 +1,7 @@
-C;Condensador;2
+A;Amperímetros;2
+B;Bobinas;2
+C;Condensadores;3
 P;Pilas;2
+R;Resistencias;2
+S;Conmutadores;2
+T;Transitores;3

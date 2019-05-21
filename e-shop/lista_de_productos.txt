@@ -1,4 +1,16 @@
-C;a)Condensador ceramico;Capacidad: 1.5 nF;Voltaje:100 V;0;0;oferta;C1
-C;a)Condensador de poliester;Capacidad: 39 nF;Voltaje:400 V;0;0;oferta;C2
-P;a)Pila de litio;Capacidad: 1200 mAh;Tension: 3.6;dimensiones: 14.5 x 25.2mm;0;oferta;P1
-P;b)Pila de boton alcalina;Capacidad: 21 mAh;Tension: 1.5 V;dimensiones: 7.9 x 2.1mm;0;no oferta;P2
+A;Amperimetro analogico; dimensiones: 72mmx72mm;Mide hasta 99.9 A;0;0;oferta;A1
+A;Amperimetroelectromecanicos; dimensiones: 36mmx45mm;Mide hasta 20.6A;0;0;oferta;A2
+B;Bobinas(pack de 5 unidades);Bobinas de 12uH;0;0;0;ofertas;B1
+B;Bobinas(pack de 5 unidades);Bobinas de 470uH;0;0;0;ofertas;B2
+C;Condensador ceramico;Capacidad: 1.5 nF;Voltaje:100 V;0;0;oferta;C1
+C;Condensador de poliester;Capacidad: 39 nF;Voltaje:400 V;0;0;oferta;C2
+C;Condensador electrolitico radial;Capacidad: 220Uf;Voltaje: 35V;0;0;oferta;C3
+P;Pila de litio;Capacidad: 1200 mAh;Tension: 3.6;dimensiones: 14.5 x 25.2mm;0;oferta;P1
+P;Pila de boton alcalina;Capacidad: 21 mAh;Tension: 1.5 V;dimensiones: 7.9 x 2.1mm;0;no oferta;P2
+R; Resistencias de pelicula de carbOn;Potencia: 1/16 w; Resistencia: 100k ohmios;Tolerancia: 1%;0;oferta;R1
+R;Resistencia bocinada axial; Potencia 10w;Resistencia: 100 ohmios;Tolerancia: 10%;0;oferta;R2
+S;Conmutador deslizante de dos disposiciones; descripcion: terminales soldables y aletas de sujeciOn; dimensiones: 5,5 x 19,5mm;0;0;oferta;S1
+S;Conmutador rotativo iluminado;descripcion: iluminado con LED rojo de 220V; dimensiones: 5,5x 5 x 8mm;0;0;no oferta;S2
+T;Transitor Mosfet;Voltaje: 100V;Potencia:60w;Intensidad:9.2 A;0;no oferta;T1
+T;Transitor PNP de potencia;Voltaje:85V;Potencia:104w;Intensidad:10.7 A;0;oferta;T2
+T;Transitor planar medio de silicio;Voltaje:54V;Potencia:95w;Intensidad:15 A;0;oferta;T3

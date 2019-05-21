@@ -1,4 +1,0 @@
-C;a)Condensador ceramico;Capacidad: 1.5 nF;Voltaje:100 V;0;0;oferta;C1
-C;a)Condensador de poliester;Capacidad: 39 nF;Voltaje:400 V;0;0;oferta;C2
-P;a)Pila de litio;Capacidad: 1200 mAh;Tension: 3.6;dimensiones: 14.5 x 25.2mm;0;oferta;P1
-P;b)Pila de boton alcalina;Capacidad: 21 mAh;Tension: 1.5 V;dimensiones: 7.9 x 2.1mm;0;no oferta;P2
